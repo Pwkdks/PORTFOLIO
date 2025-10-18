@@ -21,6 +21,7 @@
     }
 
     .portfolio-container {
+      position: relative;
       background: #ffffff;
       width: 80%;
       max-width: 1100px;
@@ -28,6 +29,7 @@
       box-shadow: 0 0 30px rgba(255, 182, 193, 0.4);
       padding: 40px;
       transition: transform 0.3s ease;
+      background-image: radial-gradient(circle at top left, #fff9fb, #fff);
     }
 
     .portfolio-container:hover {
@@ -37,9 +39,10 @@
     /* Header layout */
     header {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
+      justify-content: flex-start;
+      align-items: flex-start;
+      position: relative;
+      margin-bottom: 60px;
     }
 
     .header-left {
@@ -50,25 +53,31 @@
       color: #ff6fa5;
       font-size: 2.5em;
       margin-bottom: 5px;
+      font-weight: 800;
     }
 
     .header-left .subtitle {
       color: #555;
       font-size: 1.1em;
-      font-weight: 500;
+      font-weight: 600;
     }
 
+    /* Image top-right */
     .header-right img {
+      position: absolute;
+      top: 30px;
+      right: 40px;
       width: 180px;
       height: 180px;
       border-radius: 50%;
       object-fit: cover;
       box-shadow: 0 0 25px rgba(255, 192, 203, 0.6);
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .header-right img:hover {
       transform: scale(1.05);
+      box-shadow: 0 0 35px rgba(255, 192, 203, 0.8);
     }
 
     /* Info section */
