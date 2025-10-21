@@ -5,7 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jouela Heredia | Portfolio</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
 
     body {
       background-color: #fff5f8;
@@ -13,8 +18,14 @@
       line-height: 1.6;
     }
 
-    h1, h2, h3 { color: #d63384; }
-    h2 { text-align: center; margin-bottom: 10px; }
+    h1, h2, h3 {
+      color: #d63384;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
 
     .divider {
       width: 70px;
@@ -24,7 +35,7 @@
       margin: 0 auto 40px;
     }
 
-    /* Profile */
+    /* Profile Section */
     .profile {
       display: flex;
       justify-content: space-between;
@@ -34,10 +45,29 @@
       flex-wrap: wrap;
     }
 
-    .profile .text { flex: 1; min-width: 300px; }
-    .profile .text h1 { font-size: 2.8rem; margin-bottom: 5px; }
-    .profile .text h3 { font-weight: 500; margin-bottom: 10px; }
-    .profile .text p { max-width: 600px; margin-bottom: 15px; }
+    .profile .text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .profile .text h1 {
+      font-size: 2.8rem;
+      margin-bottom: 5px;
+    }
+
+    .profile .text h3 {
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .profile .text p {
+      max-width: 600px;
+      margin-bottom: 15px;
+    }
+
+    .profile .buttons {
+      margin-top: 15px;
+    }
 
     .btn, .btn-outline {
       padding: 10px 20px;
@@ -48,22 +78,49 @@
       margin-right: 10px;
     }
 
-    .btn { background-color: #d63384; color: white; }
-    .btn-outline { border: 2px solid #d63384; color: #d63384; }
+    .btn {
+      background-color: #d63384;
+      color: white;
+    }
 
-    .btn:hover { background-color: #ff66a3; }
-    .btn-outline:hover { background-color: #d63384; color: white; }
+    .btn-outline {
+      border: 2px solid #d63384;
+      color: #d63384;
+    }
 
-    .profile .image { flex: 0.8; text-align: right; }
+    .btn:hover {
+      background-color: #ff66a3;
+    }
+
+    .btn-outline:hover {
+      background-color: #d63384;
+      color: white;
+    }
+
+    .profile .image {
+      flex: 0.8;
+      text-align: right;
+    }
+
     .profile .image img {
-      width: 230px; border-radius: 15px; box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+      width: 230px;
+      border-radius: 15px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.1);
     }
 
-    /* About */
-    .about { padding: 70px 10%; text-align: center; }
-    .about-cards {
-      display: flex; justify-content: center; gap: 25px; flex-wrap: wrap;
+    /* About Me */
+    .about {
+      padding: 70px 10%;
+      text-align: center;
     }
+
+    .about-cards {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
     .card {
       background-color: white;
       padding: 25px;
@@ -72,13 +129,30 @@
       width: 280px;
     }
 
-    .card h3 { color: #ff4081; margin-bottom: 8px; }
-    .card p { font-size: 0.95rem; color: #444; }
+    .card h3 {
+      color: #ff4081;
+      margin-bottom: 8px;
+    }
 
-    /* Skills */
-    .skills { padding: 70px 10%; background-color: #fff; }
-    .skill-box { margin-bottom: 30px; }
-    .skill-box h3 { color: #d63384; margin-bottom: 10px; }
+    .card p {
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    /* Technical Skills */
+    .skills {
+      padding: 70px 10%;
+      background-color: #fff;
+    }
+
+    .skill-box {
+      margin-bottom: 30px;
+    }
+
+    .skill-box h3 {
+      color: #d63384;
+      margin-bottom: 10px;
+    }
 
     .tags span {
       display: inline-block;
@@ -90,39 +164,7 @@
       font-size: 0.9rem;
     }
 
-    /* Projects */
-    .projects { padding: 70px 10%; background-color: #fff0f7; text-align: center; }
-    .project-list {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 25px;
-    }
-
-    .project-card {
-      background-color: white;
-      padding: 25px;
-      border-radius: 15px;
-      width: 300px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-      text-align: left;
-    }
-
-    .project-card h3 { color: #d63384; margin-bottom: 10px; }
-    .project-card p { font-size: 0.95rem; margin-bottom: 15px; color: #444; }
-    .project-card a {
-      text-decoration: none;
-      color: white;
-      background-color: #d63384;
-      padding: 8px 15px;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      transition: 0.3s;
-    }
-
-    .project-card a:hover { background-color: #ff66a3; }
-
-    /* Objectives */
+    /* Career Objectives */
     .objectives {
       padding: 70px 10%;
       text-align: center;
@@ -154,6 +196,7 @@
       padding: 20px 30px;
       border-radius: 15px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      text-align: center;
     }
 
     .contact-item a {
@@ -162,18 +205,32 @@
       text-decoration: none;
     }
 
-    .quote { margin-top: 30px; font-style: italic; color: #555; }
+    .quote {
+      margin-top: 30px;
+      font-style: italic;
+      color: #555;
+    }
 
     @media (max-width: 900px) {
-      .profile { flex-direction: column; text-align: center; }
-      .profile .image { text-align: center; margin-top: 20px; }
-      .profile .image img { width: 200px; }
+      .profile {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .profile .image {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .profile .image img {
+        width: 200px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Profile -->
+  <!-- Profile Section -->
   <section class="profile">
     <div class="text">
       <h1>Jouela Heredia</h1>
@@ -185,7 +242,7 @@
       </div>
     </div>
     <div class="image">
-      <img src="mypic.jpeg" alt="Jouela Heredia">
+      <img src="your-photo.jpg" alt="Jouela Heredia">
     </div>
   </section>
 
@@ -229,29 +286,6 @@
       <h3>Design & Tools</h3>
       <div class="tags">
         <span>UI/UX Design</span><span>Figma</span><span>GitHub</span><span>Version Control</span><span>Agile</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects -->
-  <section class="projects">
-    <h2>My Projects</h2>
-    <div class="divider"></div>
-    <div class="project-list">
-      <div class="project-card">
-        <h3>💻 Personal Portfolio</h3>
-        <p>A responsive portfolio website that showcases my profile, skills, and projects using HTML and CSS.</p>
-        <a href="https://github.com/jouela123/portfolio" target="_blank">🔗 View Project</a>
-      </div>
-      <div class="project-card">
-        <h3>🛍️ Simple E-Commerce UI</h3>
-        <p>A product landing page with add-to-cart functionality and product filters built with HTML, CSS, and JavaScript.</p>
-        <a href="https://github.com/jouela123/ecommerce-ui" target="_blank">🔗 View Project</a>
-      </div>
-      <div class="project-card">
-        <h3>📝 To-Do List App</h3>
-        <p>A simple task management app allowing users to add, edit, and remove daily tasks using JavaScript local storage.</p>
-        <a href="https://github.com/jouela123/todo-app" target="_blank">🔗 View Project</a>
       </div>
     </div>
   </section>
