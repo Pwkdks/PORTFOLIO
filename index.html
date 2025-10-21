@@ -164,6 +164,53 @@
       font-size: 0.9rem;
     }
 
+    /* Projects */
+    .projects {
+      padding: 70px 10%;
+      background-color: #ffeaf3;
+      text-align: center;
+    }
+
+    .project-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .project-card {
+      background-color: white;
+      padding: 25px;
+      border-radius: 15px;
+      width: 300px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      text-align: left;
+    }
+
+    .project-card h3 {
+      color: #d63384;
+      margin-bottom: 10px;
+    }
+
+    .project-card p {
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
+
+    .project-card a {
+      text-decoration: none;
+      color: white;
+      background-color: #d63384;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      transition: 0.3s;
+    }
+
+    .project-card a:hover {
+      background-color: #ff66a3;
+    }
+
     /* Career Objectives */
     .objectives {
       padding: 70px 10%;
@@ -286,6 +333,19 @@
       <h3>Design & Tools</h3>
       <div class="tags">
         <span>UI/UX Design</span><span>Figma</span><span>GitHub</span><span>Version Control</span><span>Agile</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="projects">
+    <h2>My Projects</h2>
+    <div class="divider"></div>
+    <div class="project-list">
+      <div class="project-card">
+        <h3>🩷 Ela’s Personal Blog</h3>
+        <p>A creative and personal blog website I designed and developed to express my thoughts, share lifestyle stories, and document my growth as an IT student.</p>
+        <a href="https://jouela123.github.io/personal-blog/" target="_blank">🌐 Visit Live Site</a>
       </div>
     </div>
   </section>
