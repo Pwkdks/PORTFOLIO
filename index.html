@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jouela Heredia | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -13,186 +16,364 @@
     }
 
     body {
-      background-color: #fff7fa;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 1in; /* ✅ 1 inch margin on all sides */
-    }
-
-    .portfolio-container {
-      position: relative;
-      background: #ffffff;
-      width: 100%;
-      max-width: 1100px;
-      border-radius: 20px;
-      box-shadow: 0 0 30px rgba(255, 182, 193, 0.4);
-      padding: 40px;
-      transition: transform 0.3s ease;
-      background-image: radial-gradient(circle at top left, #fff9fb, #fff);
-    }
-
-    .portfolio-container:hover {
-      transform: scale(1.01);
-    }
-
-    /* Header layout */
-    header {
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-      position: relative;
-      margin-bottom: 60px;
-    }
-
-    .header-left {
-      flex: 1;
-    }
-
-    .header-left h1 {
-      color: #ff6fa5;
-      font-size: 2.5em;
-      margin-bottom: 5px;
-      font-weight: 800;
-    }
-
-    .header-left .subtitle {
-      color: #555;
-      font-size: 1.1em;
-      font-weight: 600;
-    }
-
-    /* Image top-right */
-    .header-right img {
-      position: absolute;
-      top: 30px;
-      right: 40px;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 0 25px rgba(255, 192, 203, 0.6);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .header-right img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 35px rgba(255, 192, 203, 0.8);
-    }
-
-    /* Info section */
-    .info {
-      color: #333;
-    }
-
-    .info p {
-      margin-bottom: 20px;
+      background-color: #fff6f8;
+      color: #222;
       line-height: 1.6;
     }
 
+    h1, h2, h3 {
+      color: #222;
+    }
+
     h2 {
-      color: #ff6fa5;
-      margin-top: 25px;
+      text-align: center;
       margin-bottom: 10px;
-      font-weight: 700;
+      font-size: 2rem;
     }
 
-    ul {
-      list-style: none;
-      margin-left: 10px;
-      margin-bottom: 15px;
+    .line {
+      width: 60px;
+      height: 4px;
+      background: #f77eb7;
+      margin: 0 auto 30px;
+      border-radius: 5px;
     }
 
-    ul li {
-      margin-bottom: 8px;
+    /* Profile */
+    .profile {
+      background: #fff7fa;
+      padding: 80px 10%;
+    }
+
+    .profile-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 50px;
+      flex-wrap: wrap;
+    }
+
+    .profile .text h1 {
+      font-size: 3rem;
+      color: #f06292;
+    }
+
+    .profile .text h3 {
+      margin-top: 5px;
       color: #333;
     }
 
-    /* Skills section */
-    .skills {
+    .profile .text .tags {
+      margin: 10px 0;
+      color: #555;
+      font-weight: 500;
+    }
+
+    .profile .text .desc {
+      margin: 20px 0;
+      max-width: 600px;
+    }
+
+    .profile .buttons {
       display: flex;
+      gap: 15px;
       flex-wrap: wrap;
+    }
+
+    .btn, .btn-outline {
+      padding: 10px 25px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .btn {
+      background: #f77eb7;
+      color: #fff;
+    }
+
+    .btn-outline {
+      border: 2px solid #f77eb7;
+      color: #f77eb7;
+    }
+
+    .btn:hover {
+      background: #f06292;
+    }
+
+    .btn-outline:hover {
+      background: #f77eb7;
+      color: #fff;
+    }
+
+    .profile .image img {
+      width: 240px;
+      border-radius: 15px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    }
+
+    /* About */
+    .about {
+      padding: 70px 10%;
+      text-align: center;
+    }
+
+    .about .cards {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .about .card {
+      background: #fff;
+      padding: 30px;
+      width: 300px;
+      border-radius: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    .about .icon {
+      font-size: 2rem;
+      color: #f77eb7;
+      margin-bottom: 10px;
+    }
+
+    /* Skills */
+    .skills {
+      padding: 70px 10%;
+    }
+
+    .skill-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .skill-box {
+      width: 30%;
+      min-width: 280px;
+    }
+
+    .skill-box h3 {
+      margin-bottom: 10px;
+      color: #f06292;
+    }
+
+    .tags span {
+      background: #ffe3ee;
+      color: #d81b60;
+      padding: 5px 12px;
+      margin: 5px;
+      border-radius: 15px;
+      display: inline-block;
+      font-size: 0.9rem;
+    }
+
+    /* Career Objectives */
+    .objectives {
+      padding: 70px 10%;
+      text-align: center;
+    }
+
+    .objectives .card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      width: 80%;
+      margin: 0 auto;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    .objectives .icon {
+      font-size: 2rem;
+      color: #f77eb7;
+      margin-bottom: 15px;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 70px 10%;
+      text-align: center;
+    }
+
+    .contact-box {
+      background: #ffeaf3;
+      border-radius: 15px;
+      width: 80%;
+      margin: 20px auto;
+      padding: 40px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    .info {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      flex-wrap: wrap;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
       gap: 10px;
     }
 
-    .skills span {
-      background-color: #ffe3eb;
-      color: #ff6fa5;
-      padding: 8px 15px;
-      border-radius: 20px;
-      font-size: 0.95em;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      cursor: default;
+    .item .icon {
+      font-size: 1.5rem;
+      color: #f77eb7;
     }
 
-    .skills span:hover {
-      background-color: #ff6fa5;
-      color: #fff;
-      transform: translateY(-3px);
-    }
-
-    /* Links */
-    a {
-      color: #ff6fa5;
+    .item a {
+      color: #f06292;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 500;
     }
 
-    a:hover {
-      text-decoration: underline;
+    .quote {
+      margin-top: 20px;
+      font-style: italic;
+      color: #555;
+    }
+
+    @media (max-width: 900px) {
+      .profile-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .skill-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .skill-box {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="portfolio-container">
-    <header>
-      <div class="header-left">
-        <h1>🌸 <strong>Jouela Heredia</strong></h1>
-        <p class="subtitle"><strong>Information Technology Student | Developer | Designer</strong></p>
-      </div>
-      <div class="header-right">
-        <img src="mypic.jpeg" alt="Jouela Heredia">
-      </div>
-    </header>
 
-    <section class="info">
+  <!-- Profile Section -->
+  <section class="profile">
+    <div class="profile-content">
+      <div class="text">
+        <h1>Jouela Heredia</h1>
+        <h3>Information Technology Student</h3>
+        <p class="tags">Developer • UI/UX Designer • Creative Technologist</p>
+        <p class="desc">
+          Passionate about leveraging technology and design to create intuitive, user-centered digital solutions.
+          Committed to continuous learning and delivering functional, elegant applications that solve real-world problems.
+        </p>
+        <div class="buttons">
+          <a href="mailto:jouelaheredia@gmail.com" class="btn">📩 Contact Me</a>
+          <a href="https://github.com/jouela123" class="btn-outline">👩‍💻 View GitHub</a>
+        </div>
+      </div>
+      <div class="image">
+        <img src="your-photo.jpg" alt="Jouela Heredia">
+      </div>
+    </div>
+  </section>
+
+  <!-- About Me -->
+  <section class="about">
+    <h2>About Me</h2>
+    <div class="line"></div>
+    <div class="cards">
+      <div class="card">
+        <div class="icon">🎓</div>
+        <h3>Education</h3>
+        <p><strong>Bachelor of Science in Information Technology</strong></p>
+        <p>Focus on Web Development & Software Engineering</p>
+      </div>
+      <div class="card">
+        <div class="icon">✨</div>
+        <h3>Specialization</h3>
+        <p><strong>Full-Stack Web Development</strong></p>
+        <p>Front-end Development • UI/UX Design • Responsive Design</p>
+      </div>
+      <div class="card">
+        <div class="icon">💗</div>
+        <h3>Core Competencies</h3>
+        <p><strong>Modern Web Technologies</strong></p>
+        <p>JavaScript • React • HTML5/CSS3 • Git & Version Control</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Skills -->
+  <section class="skills">
+    <h2>Technical Skills</h2>
+    <div class="line"></div>
+    <div class="skill-container">
+      <div class="skill-box">
+        <h3>Frontend Development</h3>
+        <div class="tags">
+          <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>React</span><span>Responsive Design</span><span>Tailwind CSS</span>
+        </div>
+      </div>
+      <div class="skill-box">
+        <h3>Programming Languages</h3>
+        <div class="tags">
+          <span>JavaScript</span><span>Java</span><span>C++</span><span>C#</span><span>Node.js</span>
+        </div>
+      </div>
+      <div class="skill-box">
+        <h3>Design & Tools</h3>
+        <div class="tags">
+          <span>UI/UX Design</span><span>Figma</span><span>Git & GitHub</span><span>Version Control</span><span>Agile</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Career Objectives -->
+  <section class="objectives">
+    <h2>Career Objectives</h2>
+    <div class="line"></div>
+    <div class="card">
+      <div class="icon">🎯</div>
       <p>
-        An Information Technology student passionate about technology, creativity, and continuous learning.  
-        I focus on combining programming and design to build functional, elegant, and user-centered digital experiences.
+        Seeking opportunities to leverage my technical skills and creative mindset to contribute to
+        innovative projects in a professional environment. Eager to collaborate with experienced teams
+        and continue developing expertise in full-stack web development and user experience design.
       </p>
-
-      <h2><strong>💡 Personal Information</strong></h2>
-      <ul>
-        <li><strong>Course:</strong> Bachelor of Science in Information Technology</li>
-        <li><strong>Specialization:</strong> Web Development & Creative Design</li>
-        <li><strong>Interests:</strong> Front-end development, UI/UX design, and digital art</li>
-        <li><strong>Fun Fact:</strong> A tech-savvy night owl who enjoys coding with coffee ☕</li>
-      </ul>
-
-      <h2><strong>🧠 Skills</strong></h2>
-      <div class="skills">
-        <span>HTML5</span>
-        <span>CSS3</span>
-        <span>JavaScript</span>
-        <span>Java</span>
-        <span>C++</span>
-        <span>C#</span>
-        <span>UI/UX Design</span>
-        <span>Node.js</span>
-      </div>
-
-      <h2><strong>🎯 Career Goals</strong></h2>
       <p>
-        To grow as a developer and designer capable of turning creative ideas into real, interactive solutions.  
-        I aspire to build projects that balance functionality, simplicity, and visual appeal.
+        My goal is to create meaningful digital solutions that combine technical excellence with intuitive
+        design, delivering real value to users and businesses alike.
       </p>
+    </div>
+  </section>
 
-      <h2><strong>💌 Contact</strong></h2>
-      <p>Email: <a href="mailto:jouelaheredia@gmail.com">jouelaheredia@gmail.com</a></p>
-      <p>GitHub: <a href="https://github.com/jouela123" target="_blank">github.com/jouela123</a></p>
-    </section>
-  </div>
+  <!-- Get in Touch -->
+  <section class="contact">
+    <h2>Get In Touch</h2>
+    <div class="line"></div>
+    <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your team.</p>
+    <div class="contact-box">
+      <div class="info">
+        <div class="item">
+          <div class="icon">📧</div>
+          <div>
+            <p>Email Address</p>
+            <a href="mailto:jouelaheredia@gmail.com">jouelaheredia@gmail.com</a>
+          </div>
+        </div>
+        <div class="item">
+          <div class="icon">👩‍💻</div>
+          <div>
+            <p>GitHub Profile</p>
+            <a href="https://github.com/jouela123">github.com/jouela123</a>
+          </div>
+        </div>
+      </div>
+      <p class="quote">"Code with passion, design with purpose, and grow with every line you write."</p>
+    </div>
+  </section>
+
 </body>
 </html>
