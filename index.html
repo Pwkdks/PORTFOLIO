@@ -1,174 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jouela Heredia | Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
     }
 
     body {
-      background-color: #fff6f8;
-      color: #222;
+      background-color: #fff5f8;
+      color: #333;
       line-height: 1.6;
     }
 
     h1, h2, h3 {
-      color: #222;
+      color: #d63384;
     }
 
     h2 {
       text-align: center;
       margin-bottom: 10px;
-      font-size: 2rem;
     }
 
-    .line {
-      width: 60px;
-      height: 4px;
-      background: #f77eb7;
-      margin: 0 auto 30px;
+    .divider {
+      width: 70px;
+      height: 3px;
+      background-color: #ff94c2;
       border-radius: 5px;
+      margin: 0 auto 40px;
     }
 
-    /* Profile */
+    /* Profile Section */
     .profile {
-      background: #fff7fa;
-      padding: 80px 10%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 70px 10%;
+      background-color: #ffe6f0;
+      flex-wrap: wrap;
     }
 
-    .profile-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 50px;
-      flex-wrap: wrap;
+    .profile .text {
+      flex: 1;
+      min-width: 300px;
     }
 
     .profile .text h1 {
-      font-size: 3rem;
-      color: #f06292;
+      font-size: 2.8rem;
+      margin-bottom: 5px;
     }
 
     .profile .text h3 {
-      margin-top: 5px;
-      color: #333;
-    }
-
-    .profile .text .tags {
-      margin: 10px 0;
-      color: #555;
       font-weight: 500;
+      margin-bottom: 10px;
     }
 
-    .profile .text .desc {
-      margin: 20px 0;
+    .profile .text p {
       max-width: 600px;
+      margin-bottom: 15px;
     }
 
     .profile .buttons {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
+      margin-top: 15px;
     }
 
     .btn, .btn-outline {
-      padding: 10px 25px;
-      border-radius: 25px;
+      padding: 10px 20px;
+      border-radius: 20px;
       text-decoration: none;
       font-weight: 500;
       transition: 0.3s;
+      margin-right: 10px;
     }
 
     .btn {
-      background: #f77eb7;
-      color: #fff;
+      background-color: #d63384;
+      color: white;
     }
 
     .btn-outline {
-      border: 2px solid #f77eb7;
-      color: #f77eb7;
+      border: 2px solid #d63384;
+      color: #d63384;
     }
 
     .btn:hover {
-      background: #f06292;
+      background-color: #ff66a3;
     }
 
     .btn-outline:hover {
-      background: #f77eb7;
-      color: #fff;
+      background-color: #d63384;
+      color: white;
+    }
+
+    .profile .image {
+      flex: 0.8;
+      text-align: right;
     }
 
     .profile .image img {
-      width: 240px;
+      width: 230px;
       border-radius: 15px;
-      box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 3px 12px rgba(0,0,0,0.1);
     }
 
-    /* About */
+    /* About Me */
     .about {
       padding: 70px 10%;
       text-align: center;
     }
 
-    .about .cards {
+    .about-cards {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 25px;
       flex-wrap: wrap;
     }
 
-    .about .card {
-      background: #fff;
-      padding: 30px;
-      width: 300px;
+    .card {
+      background-color: white;
+      padding: 25px;
       border-radius: 15px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      width: 280px;
     }
 
-    .about .icon {
-      font-size: 2rem;
-      color: #f77eb7;
-      margin-bottom: 10px;
+    .card h3 {
+      color: #ff4081;
+      margin-bottom: 8px;
     }
 
-    /* Skills */
+    .card p {
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    /* Technical Skills */
     .skills {
       padding: 70px 10%;
-    }
-
-    .skill-container {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 30px;
+      background-color: #fff;
     }
 
     .skill-box {
-      width: 30%;
-      min-width: 280px;
+      margin-bottom: 30px;
     }
 
     .skill-box h3 {
+      color: #d63384;
       margin-bottom: 10px;
-      color: #f06292;
     }
 
     .tags span {
-      background: #ffe3ee;
-      color: #d81b60;
-      padding: 5px 12px;
-      margin: 5px;
-      border-radius: 15px;
       display: inline-block;
+      background-color: #ffe3ee;
+      color: #d63384;
+      padding: 5px 12px;
+      border-radius: 20px;
+      margin: 4px;
       font-size: 0.9rem;
     }
 
@@ -176,21 +168,13 @@
     .objectives {
       padding: 70px 10%;
       text-align: center;
+      background-color: #ffe6f0;
     }
 
-    .objectives .card {
-      background: #fff;
-      padding: 30px;
-      border-radius: 15px;
-      width: 80%;
-      margin: 0 auto;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-    }
-
-    .objectives .icon {
-      font-size: 2rem;
-      color: #f77eb7;
-      margin-bottom: 15px;
+    .objectives p {
+      max-width: 800px;
+      margin: 10px auto;
+      font-size: 1rem;
     }
 
     /* Contact */
@@ -199,58 +183,47 @@
       text-align: center;
     }
 
-    .contact-box {
-      background: #ffeaf3;
-      border-radius: 15px;
-      width: 80%;
-      margin: 20px auto;
-      padding: 40px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-    }
-
-    .info {
+    .contact-info {
       display: flex;
       justify-content: center;
-      gap: 50px;
       flex-wrap: wrap;
+      gap: 50px;
+      margin-top: 20px;
     }
 
-    .item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .contact-item {
+      background-color: #ffeaf3;
+      padding: 20px 30px;
+      border-radius: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      text-align: center;
     }
 
-    .item .icon {
-      font-size: 1.5rem;
-      color: #f77eb7;
-    }
-
-    .item a {
-      color: #f06292;
-      text-decoration: none;
+    .contact-item a {
+      color: #d63384;
       font-weight: 500;
+      text-decoration: none;
     }
 
     .quote {
-      margin-top: 20px;
+      margin-top: 30px;
       font-style: italic;
       color: #555;
     }
 
     @media (max-width: 900px) {
-      .profile-content {
+      .profile {
         flex-direction: column;
         text-align: center;
       }
 
-      .skill-container {
-        flex-direction: column;
-        align-items: center;
+      .profile .image {
+        text-align: center;
+        margin-top: 20px;
       }
 
-      .skill-box {
-        width: 100%;
+      .profile .image img {
+        width: 200px;
       }
     }
   </style>
@@ -259,48 +232,36 @@
 
   <!-- Profile Section -->
   <section class="profile">
-    <div class="profile-content">
-      <div class="text">
-        <h1>Jouela Heredia</h1>
-        <h3>Information Technology Student</h3>
-        <p class="tags">Developer • UI/UX Designer • Creative Technologist</p>
-        <p class="desc">
-          Passionate about leveraging technology and design to create intuitive, user-centered digital solutions.
-          Committed to continuous learning and delivering functional, elegant applications that solve real-world problems.
-        </p>
-        <div class="buttons">
-          <a href="mailto:jouelaheredia@gmail.com" class="btn">📩 Contact Me</a>
-          <a href="https://github.com/jouela123" class="btn-outline">👩‍💻 View GitHub</a>
-        </div>
+    <div class="text">
+      <h1>Jouela Heredia</h1>
+      <h3>Information Technology Student</h3>
+      <p>Passionate about creating user-friendly designs and functional websites that blend creativity and technology. I strive to develop projects that enhance both experience and usability.</p>
+      <div class="buttons">
+        <a href="mailto:jouelaheredia@gmail.com" class="btn">📩 Contact Me</a>
+        <a href="https://github.com/jouela123" class="btn-outline">👩‍💻 View GitHub</a>
       </div>
-      <div class="image">
-        <img src="your-photo.jpg" alt="Jouela Heredia">
-      </div>
+    </div>
+    <div class="image">
+      <img src="mypic.jpeg" alt="Jouela Heredia">
     </div>
   </section>
 
   <!-- About Me -->
   <section class="about">
     <h2>About Me</h2>
-    <div class="line"></div>
-    <div class="cards">
+    <div class="divider"></div>
+    <div class="about-cards">
       <div class="card">
-        <div class="icon">🎓</div>
-        <h3>Education</h3>
-        <p><strong>Bachelor of Science in Information Technology</strong></p>
-        <p>Focus on Web Development & Software Engineering</p>
+        <h3>🎓 Education</h3>
+        <p>Bachelor of Science in Information Technology<br>Focused on Web Development & Software Engineering.</p>
       </div>
       <div class="card">
-        <div class="icon">✨</div>
-        <h3>Specialization</h3>
-        <p><strong>Full-Stack Web Development</strong></p>
-        <p>Front-end Development • UI/UX Design • Responsive Design</p>
+        <h3>💗 Specialization</h3>
+        <p>Full-Stack Web Development<br>Front-end Development • UI/UX Design • Responsive Design.</p>
       </div>
       <div class="card">
-        <div class="icon">💗</div>
-        <h3>Core Competencies</h3>
-        <p><strong>Modern Web Technologies</strong></p>
-        <p>JavaScript • React • HTML5/CSS3 • Git & Version Control</p>
+        <h3>✨ Core Competencies</h3>
+        <p>HTML • CSS • JavaScript • React • Git & GitHub • Figma.</p>
       </div>
     </div>
   </section>
@@ -308,25 +269,23 @@
   <!-- Technical Skills -->
   <section class="skills">
     <h2>Technical Skills</h2>
-    <div class="line"></div>
-    <div class="skill-container">
-      <div class="skill-box">
-        <h3>Frontend Development</h3>
-        <div class="tags">
-          <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>React</span><span>Responsive Design</span><span>Tailwind CSS</span>
-        </div>
+    <div class="divider"></div>
+    <div class="skill-box">
+      <h3>Frontend Development</h3>
+      <div class="tags">
+        <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>React</span><span>Tailwind</span>
       </div>
-      <div class="skill-box">
-        <h3>Programming Languages</h3>
-        <div class="tags">
-          <span>JavaScript</span><span>Java</span><span>C++</span><span>C#</span><span>Node.js</span>
-        </div>
+    </div>
+    <div class="skill-box">
+      <h3>Programming Languages</h3>
+      <div class="tags">
+        <span>Java</span><span>C++</span><span>C#</span><span>Node.js</span>
       </div>
-      <div class="skill-box">
-        <h3>Design & Tools</h3>
-        <div class="tags">
-          <span>UI/UX Design</span><span>Figma</span><span>Git & GitHub</span><span>Version Control</span><span>Agile</span>
-        </div>
+    </div>
+    <div class="skill-box">
+      <h3>Design & Tools</h3>
+      <div class="tags">
+        <span>UI/UX Design</span><span>Figma</span><span>GitHub</span><span>Version Control</span><span>Agile</span>
       </div>
     </div>
   </section>
@@ -334,45 +293,29 @@
   <!-- Career Objectives -->
   <section class="objectives">
     <h2>Career Objectives</h2>
-    <div class="line"></div>
-    <div class="card">
-      <div class="icon">🎯</div>
-      <p>
-        Seeking opportunities to leverage my technical skills and creative mindset to contribute to
-        innovative projects in a professional environment. Eager to collaborate with experienced teams
-        and continue developing expertise in full-stack web development and user experience design.
-      </p>
-      <p>
-        My goal is to create meaningful digital solutions that combine technical excellence with intuitive
-        design, delivering real value to users and businesses alike.
-      </p>
-    </div>
+    <div class="divider"></div>
+    <p>My goal is to use my knowledge and creativity to contribute to innovative projects while expanding my technical skills in software and web development.</p>
+    <p>I aim to collaborate with passionate professionals and deliver meaningful solutions that make technology accessible and enjoyable for everyone.</p>
   </section>
 
   <!-- Get in Touch -->
   <section class="contact">
-    <h2>Get In Touch</h2>
-    <div class="line"></div>
-    <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your team.</p>
-    <div class="contact-box">
-      <div class="info">
-        <div class="item">
-          <div class="icon">📧</div>
-          <div>
-            <p>Email Address</p>
-            <a href="mailto:jouelaheredia@gmail.com">jouelaheredia@gmail.com</a>
-          </div>
-        </div>
-        <div class="item">
-          <div class="icon">👩‍💻</div>
-          <div>
-            <p>GitHub Profile</p>
-            <a href="https://github.com/jouela123">github.com/jouela123</a>
-          </div>
-        </div>
+    <h2>Get in Touch</h2>
+    <div class="divider"></div>
+    <p>Let's connect! Feel free to reach out for collaborations, ideas, or opportunities.</p>
+
+    <div class="contact-info">
+      <div class="contact-item">
+        <p>📧 Email</p>
+        <a href="mailto:jouelaheredia@gmail.com">jouelaheredia@gmail.com</a>
       </div>
-      <p class="quote">"Code with passion, design with purpose, and grow with every line you write."</p>
+      <div class="contact-item">
+        <p>👩‍💻 GitHub</p>
+        <a href="https://github.com/jouela123">github.com/jouela123</a>
+      </div>
     </div>
+
+    <p class="quote">“Code with passion, design with purpose, and grow with every line you write.”</p>
   </section>
 
 </body>
