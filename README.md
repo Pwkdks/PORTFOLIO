@@ -1,54 +1,31 @@
-# 🌸 About Me — Jouela
+# 🌸 Jouela Heredia — Personal Portfolio Website
 
-Hi! I’m **Jouela**, an **IT student** passionate about technology, creativity, and continuous learning.  
-I love combining **design and development** to create meaningful digital experiences — from clean, simple layouts to interactive projects that reflect both style and function.  
-
----
-
-## 💡 Personal Information
-
-- 🎓 **Course:** Bachelor of Science in Information Technology  
-- 🏫 **Focus:** Web Development & Creative Design  
-- 💖 **Interest:** Front-end development, UI/UX design, and digital art  
-- ☕ **Fun Fact:** Tech-savvy night owl who codes best with coffee by her side  
+Welcome to my personal portfolio website!  
+This project showcases my **skills, projects, and background** as an aspiring **Information Technology student and web developer**.  
+It was built using **HTML and CSS**, with a clean and modern pink-themed design.
 
 ---
 
-## 🧠 Skills
+## ✨ Features
 
-### 🖥️ **Technical Skills**
-- HTML5  
-- CSS3  
-- JavaScript  
-- Java  
-- C++  
-- C#  
-- Responsive Web Design  
-- Git & GitHub  
-- UI/UX Design (Figma)  
-- Basic Node.js  
-
-### 🎨 **Creative Skills**
-- Graphic & Layout Design  
-- Photo Editing (Canva, Photoshop)  
-- Color Palette Creation  
-- Writing & Content Design  
+- 🎀 **Responsive Layout** – Works perfectly on desktop and mobile devices.  
+- 💻 **Profile Section** – Includes my name, title, and description.  
+- 💗 **About Me** – Highlights my education, specialization, and core competencies.  
+- 🛠️ **Technical Skills** – Lists the languages, frameworks, and tools I use.  
+- 🎯 **Career Objectives** – My goals and professional vision.  
+- 📩 **Get In Touch** – Contact details with email and GitHub links.  
 
 ---
 
-## 🎯 Goals
+## 🖋️ Technologies Used
 
-I aim to improve my **programming** and **design** skills while creating projects that express my creativity and growth as an IT student.  
-Each project I build reflects my journey of learning, designing, and coding with purpose 🌷  
-
----
-
-## 💌 Contact Me
-
-📧 **Email:** jouelaheredia@gmail.com  
-💼 **GitHub:** [github.com/jouela123](https://github.com/jouela123)  
-🪩 **Portfolio (Coming Soon):** [jouela.github.io](https://jouela.github.io)
+- **HTML5**
+- **CSS3 (Inline Style)**
+- **Google Fonts (Poppins)**
+- **Font Emojis / Icons**
+- **Responsive Flexbox Layout**
 
 ---
 
-✨ *"Code with passion, design with purpose, and grow with every line you write."* — **Jouela**
+## 📁 File Structure
+
