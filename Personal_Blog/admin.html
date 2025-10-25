@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Ela's Blog</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="admin-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="cursor"></div>
+    
+    <div class="floating-hearts">
+        <i class="fas fa-heart"></i>
+        <i class="fas fa-heart"></i>
+        <i class="fas fa-heart"></i>
+        <i class="fas fa-heart"></i>
+        <i class="fas fa-heart"></i>
+        <i class="fas fa-heart"></i>
+    </div>
+
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <div class="admin-container">
+        <header class="admin-header">
+            <div class="admin-logo">
+                <span>E</span>la's Blog Admin
+            </div>
+            <div class="admin-nav">
+                <div class="admin-dropdown">
+                    <button class="dropdown-btn" onclick="toggleDropdown()">
+                        <i class="fas fa-bars"></i> Admin Menu
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </button>
+                    <div class="dropdown-content" id="adminDropdown">
+                        <div class="dropdown-section">
+                            <h4>📝 Content</h4>
+                            <a onclick="showSection('posts'); closeDropdown()">
+                                <i class="fas fa-edit"></i> Manage Posts
+                            </a>
+                            <a onclick="showSection('create'); closeDropdown()">
+                                <i class="fas fa-plus"></i> Create Post
+                            </a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>💬 Engagement</h4>
+                            <a onclick="showSection('comments'); closeDropdown()">
+                                <i class="fas fa-comments"></i> Review Comments
+                            </a>
+                            <a onclick="showSection('messages'); closeDropdown()">
+                                <i class="fas fa-envelope"></i> Reply Messages
+                            </a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>🎨 Media</h4>
+                            <a onclick="showSection('gallery'); closeDropdown()">
+                                <i class="fas fa-images"></i> Manage Gallery
+                            </a>
+                            <a onclick="showSection('projects'); closeDropdown()">
+                                <i class="fas fa-code"></i> IT Projects
+                            </a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>⚙️ System</h4>
+                            <a onclick="showSection('funFacts'); closeDropdown()">
+                                <i class="fas fa-smile"></i> Fun Facts
+                            </a>
+                            <a onclick="showSection('settings'); closeDropdown()">
+                                <i class="fas fa-cog"></i> Settings
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="adminLogout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <main class="admin-main">
+            <!-- Posts Management Section -->
+            <section id="posts-section" class="admin-section active">
+                <div class="section-header">
+                    <h2>📚 Post Library</h2>
+                    <div class="header-decoration">
+                        <i class="fas fa-heart pulse"></i>
+                        <i class="fas fa-star sparkle"></i>
+                        <i class="fas fa-heart pulse"></i>
+                    </div>
+                </div>
+                
+                <div class="library-controls">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="postSearch" placeholder="Search posts..." onkeyup="filterPosts()">
+                    </div>
+                    <div class="view-controls">
+                        <button class="view-btn active" onclick="setView('grid')" data-view="grid">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button class="view-btn" onclick="setView('list')" data-view="list">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="posts-library" id="postsList">
+                    <!-- Posts will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Comments Management Section -->
+            <section id="comments-section" class="admin-section">
+                <div class="section-header">
+                    <h2>Manage Comments</h2>
+                    <div class="header-decoration">
+                        <i class="fas fa-heart pulse"></i>
+                        <i class="fas fa-star sparkle"></i>
+                        <i class="fas fa-heart pulse"></i>
+                    </div>
+                </div>
+                <div class="list-controls">
+                    <input type="text" id="commentSearch" placeholder="Search comments..." onkeyup="filterComments()">
+                    <select id="commentFilter" onchange="filterComments()">
+                        <option value="all">All Comments</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                    </select>
+                </div>
+                <div class="comments-list" id="adminCommentsList">
+                    <!-- Comments will be loaded here -->
+                </div>
+                <div class="pagination" id="commentsPagination"></div>
+            </section>
+
+            <!-- Gallery Management Section -->
+            <section id="gallery-section" class="admin-section">
+                <div class="section-header">
+                    <h2>Manage Gallery</h2>
+                    <div class="header-decoration">
+                        <i class="fas fa-heart pulse"></i>
+                        <i class="fas fa-star sparkle"></i>
+                        <i class="fas fa-heart pulse"></i>
+                    </div>
+                </div>
+                <div class="gallery-form">
+                    <h3>Add New Image</h3>
+                    <form onsubmit="addGalleryImage(event)">
+                        <div class="form-group">
+                            <label for="imageUrl">Image URL</label>
+                            <input type="url" id="imageUrl" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="imageCategory">Category</label>
+                            <input type="text" id="imageCategory" placeholder="e.g., Morning Routines, Creative Workspace" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="imageTitle">Title</label>
+                            <input type="text" id="imageTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="imageDesc">Description</label>
+                            <textarea id="imageDesc" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-plus"></i> Add Image
+                        </button>
+                    </form>
+                </div>
+                <div class="list-controls">
+                    <input type="text" id="gallerySearch" placeholder="Search images..." onkeyup="filterGallery()">
+                    <select id="categoryFilter" onchange="filterGallery()">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+                <div class="gallery-list" id="galleryList">
+                    <!-- Gallery images will be loaded here -->
+                </div>
+                <div class="pagination" id="galleryPagination"></div>
+            </section>
+
+            <!-- Messages Section -->
+            <section id="messages-section" class="admin-section">
+                <div class="section-header">
+                    <h2>💌 Message Center</h2>
+                    <div class="header-decoration">
+                        <i class="fas fa-heart pulse"></i>
+                        <i class="fas fa-star sparkle"></i>
+                        <i class="fas fa-heart pulse"></i>
+                    </div>
+                </div>
+                
+                <div class="message-tabs">
+                    <button class="tab-btn active" onclick="showMessageTab('all')" data-tab="all">
+                        <i class="fas fa-inbox"></i> All Messages
+                    </button>
+                    <button class="tab-btn" onclick="showMessageTab('new')" data-tab="new">
+                        <i class="fas fa-envelope"></i> New
+                    </button>
+                    <button class="tab-btn" onclick="showMessageTab('replied')" data-tab="replied">
+                        <i class="fas fa-reply"></i> Replied
+                    </button>
+                </div>
+                
+                <div class="messages-list" id="messagesList">
+                    <!-- Messages will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings-section" class="admin-section">
+                <div class="section-header">
+                    <h2>Settings</h2>
+                    <div class="header-decoration">
+                        <i class="fas fa-heart pulse"></i>
+                        <i class="fas fa-star sparkle"></i>
+                        <i class="fas fa-heart pulse"></i>
+                    </div>
+                </div>
+                <div class="settings-form">
+                    <div class="settings-tabs">
+                        <button class="settings-tab active" onclick="showSettingsTab('general')">General</button>
+                        <button class="settings-tab" onclick="showSettingsTab('appearance')">Appearance</button>
+                        <button class="settings-tab" onclick="showSettingsTab('social')">Social Media</button>
+                        <button class="settings-tab" onclick="showSettingsTab('backup')">Backup</button>
+                    </div>
+                    
+                    <div class="settings-content">
+                        <div class="settings-panel active" id="generalSettings">
+                            <h3>General Settings</h3>
+                            <form onsubmit="saveSettings(event)">
+                                <div class="form-group">
+                                    <label for="blogTitle">Blog Title</label>
+                                    <input type="text" id="blogTitle" placeholder="Ela's Blog" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="blogDescription">Blog Description</label>
+                                    <textarea id="blogDescription" rows="3" placeholder="Welcome to my personal space..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="adminEmail">Contact Email</label>
+                                    <input type="email" id="adminEmail" placeholder="ela@example.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="postsPerPage">Posts Per Page</label>
+                                    <select id="postsPerPage">
+                                        <option value="3">3 Posts</option>
+                                        <option value="6">6 Posts</option>
+                                        <option value="9">9 Posts</option>
+                                        <option value="12">12 Posts</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="submit-btn">
+                                    <i class="fas fa-save"></i> Save General Settings
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div class="settings-panel" id="appearanceSettings">
+                            <h3>Appearance Settings</h3>
+                            <form onsubmit="saveAppearanceSettings(event)">
+                                <div class="form-group">
+                                    <label for="themeColor">Theme Color</label>
+                                    <input type="color" id="themeColor" value="#ff6b9d">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profileImage">Profile Image URL</label>
+                                    <input type="url" id="profileImage" placeholder="https://example.com/profile.jpg">
+                                </div>
+                                <div class="form-group">
+                                    <label>Animation Settings</label>
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="enableHearts" checked>
+                                            <span>Enable Floating Hearts</span>
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="enableBubbles" checked>
+                                            <span>Enable Bubbles</span>
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="enableCursor" checked>
+                                            <span>Enable Custom Cursor</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="submit-btn">
+                                    <i class="fas fa-palette"></i> Save Appearance
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div class="settings-panel" id="socialSettings">
+                            <h3>Social Media Links</h3>
+                            <form onsubmit="saveSocialSettings(event)">
+                                <div class="form-group">
+                                    <label for="instagramUrl">Instagram URL</label>
+                                    <input type="url" id="instagramUrl" placeholder="https://instagram.com/username">
+                                </div>
+                                <div class="form-group">
+                                    <label for="twitterUrl">Twitter URL</label>
+                                    <input type="url" id="twitterUrl" placeholder="https://twitter.com/username">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pinterestUrl">Pinterest URL</label>
+                                    <input type="url" id="pinterestUrl" placeholder="https://pinterest.com/username">
+                                </div>
+                                <div class="form-group">
+                                    <label for="youtubeUrl">YouTube URL</label>
+                                    <input type="url" id="youtubeUrl" placeholder="https://youtube.com/channel/username">
+                                </div>
+                                <button type="submit" class="submit-btn">
+                                    <i class="fab fa-instagram"></i> Save Social Links
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div class="settings-panel" id="backupSettings">
+                            <h3>Backup & Data Management</h3>
+                            <div class="backup-section">
+                                <h4>Export Data</h4>
+                                <p>Download all your blog data as a backup file</p>
+                                <button onclick="exportData()" class="backup-btn">
+                                    <i class="fas fa-download"></i> Export All Data
+                                </button>
+                            </div>
+                            <div class="backup-section">
+                                <h4>Import Data</h4>
+                                <p>Restore your blog from a backup file</p>
+                                <input type="file" id="importFile" accept=".json" style="display: none;">
+                                <button onclick="document.getElementById('importFile').click()" class="backup-btn">
+                                    <i class="fas fa-upload"></i> Import Data
+                                </button>
+                            </div>
+                            <div class="backup-section danger">
+                                <h4>Reset Blog</h4>
+                                <p>⚠️ This will delete ALL your data permanently!</p>
+                                <button onclick="resetBlog()" class="danger-btn">
+                                    <i class="fas fa-trash-alt"></i> Reset Everything
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Management Section -->
+            <section id="projects-section" class="admin-section">
+                <div class="section-header">
+                    <h2>💻 IT Projects</h2>
+                    <div class="header-decoration">
+                        <i class="fas fa-heart pulse"></i>
+                        <i class="fas fa-star sparkle"></i>
+                        <i class="fas fa-heart pulse"></i>
+                    </div>
+                </div>
+                
+                <div class="project-form">
+                    <h3>Add New Project</h3>
+                    <form onsubmit="addProject(event)">
+                        <div class="form-group">
+                            <label for="projectTitle">Project Title</label>
+                            <input type="text" id="projectTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectDescription">Description</label>
+                            <textarea id="projectDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectImage">Project Image URL</label>
+                            <input type="url" id="projectImage" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectTech">Technologies (comma separated)</label>
+                            <input type="text" id="projectTech" placeholder="HTML, CSS, JavaScript, PHP" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectDemo">Live Demo URL (Optional)</label>
+                            <input type="url" id="projectDemo">
+                        </div>
+                        <div class="form-group">
+                            <label for="projectSource">Source Code URL</label>
+                            <input type="url" id="projectSource" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectCode">Code Snippet</label>
+                            <textarea id="projectCode" rows="6" placeholder="Paste a key code snippet from your project" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-plus"></i> Add Project
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="projects-list" id="projectsList">
+                    <!-- Projects will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Fun Facts Management Section -->
+            <section id="funFacts-section" class="admin-section">
+                <div class="section-header">
+                    <h2>😊 Fun Facts</h2>
+                    <div class="header-decoration">
+                        <i class="fas fa-heart pulse"></i>
+                        <i class="fas fa-star sparkle"></i>
+                        <i class="fas fa-heart pulse"></i>
+                    </div>
+                </div>
+                
+                <div class="fun-facts-form">
+                    <h3>Add New Fun Fact</h3>
+                    <form onsubmit="addFunFact(event)">
+                        <div class="form-group">
+                            <label for="factIcon">Emoji Icon</label>
+                            <input type="text" id="factIcon" placeholder="☕" maxlength="2" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="factText">Fun Fact Text</label>
+                            <input type="text" id="factText" placeholder="Coffee lover - 5 cups daily!" required>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-plus"></i> Add Fun Fact
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="list-controls">
+                    <input type="text" id="factsSearch" placeholder="Search fun facts..." onkeyup="filterFacts()">
+                </div>
+                <div class="fun-facts-list" id="funFactsList">
+                    <!-- Fun facts will be loaded here -->
+                </div>
+                <div class="pagination" id="factsPagination"></div>
+            </section>
+
+            <!-- Create Post Section -->
+            <section id="create-section" class="admin-section">
+                <div class="section-header">
+                    <h2>Create New Post</h2>
+                    <div class="header-decoration">
+                        <i class="fas fa-heart pulse"></i>
+                        <i class="fas fa-star sparkle"></i>
+                        <i class="fas fa-heart pulse"></i>
+                    </div>
+                </div>
+                <form class="post-form" onsubmit="createPost(event)">
+                    <div class="form-group">
+                        <label for="postTitle">Post Title</label>
+                        <input type="text" id="postTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="postImage">Image URL</label>
+                        <input type="url" id="postImage" placeholder="https://example.com/image.jpg">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="postExcerpt">Excerpt</label>
+                        <textarea id="postExcerpt" rows="3" placeholder="Brief description of the post"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="postContent">Content</label>
+                        <textarea id="postContent" rows="10" required placeholder="Write your post content here..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-save"></i> Create Post
+                    </button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script src="admin-pagination.js"></script>
+    <script>
+        // Check admin access
+        function checkAdminAccess() {
+            const isLoggedIn = localStorage.getItem('userLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+                return;
+            }
+        }
+
+        // Show/hide sections
+        function showSection(section) {
+            document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(section + '-section').classList.add('active');
+            event.target.classList.add('active');
+            
+            if (section === 'posts') {
+                loadPosts();
+            } else if (section === 'comments') {
+                loadComments();
+            } else if (section === 'gallery') {
+                loadGalleryAdmin();
+            } else if (section === 'messages') {
+                loadMessages();
+            } else if (section === 'settings') {
+                loadSettings();
+            } else if (section === 'projects') {
+                loadProjectsAdmin();
+            } else if (section === 'funFacts') {
+                loadAdminFunFacts();
+            }
+        }
+
+        let currentView = 'grid';
+        let allPosts = [];
+        
+        // Load existing posts
+        function loadPosts() {
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            const comments = JSON.parse(localStorage.getItem('blogComments') || '[]');
+            allPosts = posts;
+            const postsList = document.getElementById('postsList');
+            
+            if (posts.length === 0) {
+                postsList.innerHTML = '<div class="empty-library"><i class="fas fa-book-open"></i><p>Your library is empty. Create your first post!</p></div>';
+                return;
+            }
+            
+            renderPosts(posts, comments);
+        }
+        
+        function renderPosts(posts, comments) {
+            const postsList = document.getElementById('postsList');
+            postsList.className = `posts-library ${currentView}-view`;
+            
+            postsList.innerHTML = posts.map((post, index) => {
+                const postComments = comments.filter(c => c.postIndex === index);
+                const pendingComments = postComments.filter(c => !c.approved).length;
+                
+                return `
+                    <div class="library-item" data-title="${post.title.toLowerCase()}">
+                        <div class="book-cover">
+                            <img src="${post.image || 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=300&h=200&fit=crop'}" alt="${post.title}">
+                            <div class="book-overlay">
+                                <div class="book-actions">
+                                    <button onclick="editPost(${index})" class="action-btn edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button onclick="deletePost(${index})" class="action-btn delete" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h3 class="book-title">${post.title}</h3>
+                            <p class="book-date">📅 ${post.date}</p>
+                            <p class="book-excerpt">${post.excerpt || 'No excerpt available'}</p>
+                            <div class="book-stats">
+                                <span class="stat">
+                                    <i class="fas fa-comments"></i> ${postComments.length}
+                                </span>
+                                ${pendingComments > 0 ? `<span class="stat pending"><i class="fas fa-clock"></i> ${pendingComments}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function setView(view) {
+            currentView = view;
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-view="${view}"]`).classList.add('active');
+            loadPosts();
+        }
+        
+        function filterPosts() {
+            const searchTerm = document.getElementById('postSearch').value.toLowerCase();
+            const comments = JSON.parse(localStorage.getItem('blogComments') || '[]');
+            
+            if (searchTerm === '') {
+                renderPosts(allPosts, comments);
+            } else {
+                const filteredPosts = allPosts.filter(post => 
+                    post.title.toLowerCase().includes(searchTerm) ||
+                    (post.excerpt && post.excerpt.toLowerCase().includes(searchTerm))
+                );
+                renderPosts(filteredPosts, comments);
+            }
+        }
+
+        // Create new post
+        function createPost(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('postTitle').value;
+            const image = document.getElementById('postImage').value;
+            const excerpt = document.getElementById('postExcerpt').value;
+            const content = document.getElementById('postContent').value;
+            
+            const post = {
+                title,
+                image: image || 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=600&h=400&fit=crop',
+                excerpt,
+                content: [content],
+                date: new Date().toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                })
+            };
+            
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            // Add new post to the beginning (newest first)
+            posts.unshift(post);
+            localStorage.setItem('blogPosts', JSON.stringify(posts));
+            
+            // Reset form
+            document.querySelector('.post-form').reset();
+            
+            // Show success message
+            showMessage('Post created successfully!', 'success');
+            
+            // Switch to posts section
+            showSection('posts');
+        }
+
+        // Delete post
+        function deletePost(index) {
+            if (confirm('🗑️ Are you sure you want to remove this post from your library?')) {
+                const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+                posts.splice(index, 1);
+                localStorage.setItem('blogPosts', JSON.stringify(posts));
+                loadPosts();
+                showMessage('📚 Post removed from library!', 'success');
+            }
+        }
+
+        // Edit post
+        function editPost(index) {
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            const post = posts[index];
+            
+            // Fill form with existing data
+            document.getElementById('postTitle').value = post.title;
+            document.getElementById('postImage').value = post.image;
+            document.getElementById('postExcerpt').value = post.excerpt || '';
+            document.getElementById('postContent').value = post.content[0] || '';
+            
+            // Change form to edit mode
+            const form = document.querySelector('.post-form');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Post';
+            
+            // Update form handler
+            form.onsubmit = function(event) {
+                event.preventDefault();
+                updatePost(index);
+            };
+            
+            // Switch to create section
+            showSection('create');
+        }
+        
+        function updatePost(index) {
+            const title = document.getElementById('postTitle').value;
+            const image = document.getElementById('postImage').value;
+            const excerpt = document.getElementById('postExcerpt').value;
+            const content = document.getElementById('postContent').value;
+            
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            posts[index] = {
+                title,
+                image: image || 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=600&h=400&fit=crop',
+                excerpt,
+                content: [content],
+                date: posts[index].date // Keep original date
+            };
+            
+            localStorage.setItem('blogPosts', JSON.stringify(posts));
+            
+            // Reset form to create mode
+            resetPostForm();
+            
+            showMessage('📚 Post updated successfully!', 'success');
+            showSection('posts');
+        }
+        
+        function resetPostForm() {
+            const form = document.querySelector('.post-form');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            
+            form.reset();
+            submitBtn.innerHTML = '<i class="fas fa-save"></i> Create Post';
+            form.onsubmit = createPost;
+        }
+
+        // Show message
+        function showMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.textContent = message;
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+
+        // Load comments for admin review
+        function loadComments() {
+            const comments = JSON.parse(localStorage.getItem('blogComments') || '[]');
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            const commentsList = document.getElementById('adminCommentsList');
+            
+            if (comments.length === 0) {
+                commentsList.innerHTML = '<p class="no-comments">No comments yet.</p>';
+                return;
+            }
+            
+            commentsList.innerHTML = comments.map((comment, index) => {
+                const postTitle = posts[comment.postIndex]?.title || 'Unknown Post';
+                return `
+                    <div class="comment-item ${comment.approved ? 'approved' : 'pending'}">
+                        <div class="comment-info">
+                            <h4>${comment.name}</h4>
+                            <p class="comment-post">On: ${postTitle}</p>
+                            <p class="comment-date">${comment.date}</p>
+                            <p class="comment-text">${comment.text}</p>
+                            <span class="status ${comment.approved ? 'approved' : 'pending'}">
+                                ${comment.approved ? 'Approved' : 'Pending'}
+                            </span>
+                        </div>
+                        <div class="comment-actions">
+                            ${!comment.approved ? `<button onclick="approveComment(${index})" class="approve-btn"><i class="fas fa-check"></i></button>` : ''}
+                            <button onclick="deleteComment(${index})" class="delete-btn"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function approveComment(index) {
+            const comments = JSON.parse(localStorage.getItem('blogComments') || '[]');
+            comments[index].approved = true;
+            localStorage.setItem('blogComments', JSON.stringify(comments));
+            loadComments();
+            showMessage('Comment approved!', 'success');
+        }
+        
+        function deleteComment(index) {
+            if (confirm('Are you sure you want to delete this comment?')) {
+                const comments = JSON.parse(localStorage.getItem('blogComments') || '[]');
+                comments.splice(index, 1);
+                localStorage.setItem('blogComments', JSON.stringify(comments));
+                loadComments();
+                showMessage('Comment deleted!', 'success');
+            }
+        }
+
+        // Gallery management functions
+        function addGalleryImage(event) {
+            event.preventDefault();
+            
+            const url = document.getElementById('imageUrl').value;
+            const category = document.getElementById('imageCategory').value;
+            const title = document.getElementById('imageTitle').value;
+            const description = document.getElementById('imageDesc').value;
+            
+            const image = {
+                src: url,
+                category: category,
+                title: title,
+                description: description
+            };
+            
+            const images = JSON.parse(localStorage.getItem('galleryImages') || '[]');
+            images.unshift(image);
+            localStorage.setItem('galleryImages', JSON.stringify(images));
+            
+            // Reset form
+            event.target.reset();
+            
+            showMessage('Image added to gallery!', 'success');
+            loadGalleryAdmin();
+        }
+        
+        function loadGalleryAdmin() {
+            const images = JSON.parse(localStorage.getItem('galleryImages') || '[]');
+            const galleryList = document.getElementById('galleryList');
+            
+            if (images.length === 0) {
+                galleryList.innerHTML = '<div class="empty-gallery"><i class="fas fa-images"></i><p>No images in gallery yet. Add your first image!</p></div>';
+                return;
+            }
+            
+            galleryList.innerHTML = `
+                <div class="gallery-grid">
+                    ${images.map((image, index) => `
+                        <div class="gallery-card">
+                            <div class="gallery-image">
+                                <img src="${image.src}" alt="${image.title}" onclick="viewImage('${image.src}', '${image.title}')">
+                                <div class="image-overlay">
+                                    <button onclick="editGalleryImage(${index})" class="action-btn edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button onclick="deleteGalleryImage(${index})" class="action-btn delete" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="gallery-info">
+                                <span class="gallery-category">${image.category}</span>
+                                <h4>${image.title}</h4>
+                                <p>${image.description}</p>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        function viewImage(src, title) {
+            const modal = document.createElement('div');
+            modal.className = 'image-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close-modal" onclick="this.parentElement.parentElement.remove()">&times;</span>
+                    <img src="${src}" alt="${title}">
+                    <h3>${title}</h3>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        
+        function editGalleryImage(index) {
+            const images = JSON.parse(localStorage.getItem('galleryImages') || '[]');
+            const image = images[index];
+            
+            // Fill form with existing data
+            document.getElementById('imageUrl').value = image.src;
+            document.getElementById('imageCategory').value = image.category;
+            document.getElementById('imageTitle').value = image.title;
+            document.getElementById('imageDesc').value = image.description;
+            
+            // Change form to edit mode
+            const form = document.querySelector('.gallery-form form');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Image';
+            
+            // Update form handler
+            form.onsubmit = function(event) {
+                event.preventDefault();
+                updateGalleryImage(index);
+            };
+            
+            // Scroll to form
+            document.querySelector('.gallery-form').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function updateGalleryImage(index) {
+            const url = document.getElementById('imageUrl').value;
+            const category = document.getElementById('imageCategory').value;
+            const title = document.getElementById('imageTitle').value;
+            const description = document.getElementById('imageDesc').value;
+            
+            const images = JSON.parse(localStorage.getItem('galleryImages') || '[]');
+            images[index] = {
+                src: url,
+                category: category,
+                title: title,
+                description: description
+            };
+            
+            localStorage.setItem('galleryImages', JSON.stringify(images));
+            
+            // Reset form to add mode
+            resetGalleryForm();
+            
+            showMessage('Image updated successfully!', 'success');
+            loadGalleryAdmin();
+        }
+        
+        function resetGalleryForm() {
+            const form = document.querySelector('.gallery-form form');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            
+            form.reset();
+            submitBtn.innerHTML = '<i class="fas fa-plus"></i> Add Image';
+            form.onsubmit = addGalleryImage;
+        }
+        
+        function deleteGalleryImage(index) {
+            if (confirm('Are you sure you want to delete this image?')) {
+                const images = JSON.parse(localStorage.getItem('galleryImages') || '[]');
+                images.splice(index, 1);
+                localStorage.setItem('galleryImages', JSON.stringify(images));
+                loadGalleryAdmin();
+                showMessage('Image deleted!', 'success');
+            }
+        }
+
+        // Admin logout
+        function adminLogout() {
+            localStorage.removeItem('userLoggedIn');
+            window.location.href = 'index.html';
+        }
+
+        let currentMessageTab = 'all';
+        
+        function showMessageTab(tab) {
+            currentMessageTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+            loadMessages();
+        }
+        
+        // Load contact messages
+        function loadMessages() {
+            const allMessages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+            const messagesList = document.getElementById('messagesList');
+            
+            let messages = allMessages;
+            if (currentMessageTab === 'new') {
+                messages = allMessages.filter(m => !m.read && !m.replied);
+            } else if (currentMessageTab === 'replied') {
+                messages = allMessages.filter(m => m.replied);
+            }
+            
+            if (messages.length === 0) {
+                const emptyText = currentMessageTab === 'new' ? 'No new messages!' : 
+                                currentMessageTab === 'replied' ? 'No replied messages yet!' : 
+                                'No messages yet. When visitors contact you, they will appear here!';
+                messagesList.innerHTML = `<div class="empty-messages"><i class="fas fa-envelope-open"></i><p>${emptyText}</p></div>`;
+                return;
+            }
+            
+            messagesList.innerHTML = `
+                <div class="messages-grid">
+                    ${messages.map((message, index) => {
+                        const originalIndex = allMessages.findIndex(m => m.id === message.id);
+                        return `
+                            <div class="message-card ${message.read ? 'read' : 'unread'}">
+                                <div class="message-header">
+                                    <div class="sender-info">
+                                        <h4>${message.name}</h4>
+                                        <span class="sender-email">${message.email}</span>
+                                    </div>
+                                    <span class="status-badge ${message.replied ? 'replied' : message.read ? 'read' : 'new'}">
+                                        ${message.replied ? '✓ Replied' : message.read ? '👁️ Read' : '✨ New'}
+                                    </span>
+                                </div>
+                                <div class="message-content">
+                                    <h5 class="message-subject">${message.subject}</h5>
+                                    <p class="message-text">${message.message}</p>
+                                    <span class="message-date">📅 ${message.date}</span>
+                                </div>
+                                <div class="message-actions">
+                                    <button onclick="replyToMessage(${originalIndex})" class="action-btn reply" title="Reply">
+                                        <i class="fas fa-reply"></i>
+                                    </button>
+                                    ${!message.read ? `<button onclick="markAsRead(${originalIndex})" class="action-btn read" title="Mark as Read"><i class="fas fa-check"></i></button>` : ''}
+                                    <button onclick="deleteMessage(${originalIndex})" class="action-btn delete" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        function replyToMessage(index) {
+            const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+            const message = messages[index];
+            
+            // Show reply modal
+            const modal = document.createElement('div');
+            modal.className = 'reply-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>💌 Reply to ${message.name}</h3>
+                        <span class="close-modal" onclick="this.parentElement.parentElement.parentElement.remove()">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Original message:</strong></p>
+                        <div class="original-message">${message.message}</div>
+                        <form onsubmit="sendReply(event, ${index})">
+                            <div class="form-group">
+                                <label for="replyText">Your Reply:</label>
+                                <textarea id="replyText" rows="5" required placeholder="Write your lovely reply here..."></textarea>
+                            </div>
+                            <div class="modal-actions">
+                                <button type="button" onclick="this.closest('.reply-modal').remove()" class="cancel-btn">Cancel</button>
+                                <button type="submit" class="send-btn">
+                                    <i class="fas fa-paper-plane"></i> Send Reply
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        
+        function sendReply(event, index) {
+            event.preventDefault();
+            const replyText = document.getElementById('replyText').value;
+            const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+            const message = messages[index];
+            
+            // Create notification for user
+            const notifications = JSON.parse(localStorage.getItem('userNotifications') || '[]');
+            const notification = {
+                id: Date.now(),
+                email: message.email,
+                name: message.name,
+                subject: message.subject,
+                reply: replyText,
+                date: new Date().toLocaleDateString(),
+                originalMessage: message.message
+            };
+            
+            notifications.unshift(notification);
+            localStorage.setItem('userNotifications', JSON.stringify(notifications));
+            
+            // Mark message as replied
+            messages[index].replied = true;
+            messages[index].read = true;
+            messages[index].replyText = replyText;
+            messages[index].replyDate = new Date().toLocaleDateString();
+            localStorage.setItem('contactMessages', JSON.stringify(messages));
+            
+            // Close modal and reload messages
+            document.querySelector('.reply-modal').remove();
+            loadMessages();
+            showMessage('💌 Reply sent! User will be notified.', 'success');
+        }
+
+        function markAsRead(index) {
+            const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+            messages[index].read = true;
+            localStorage.setItem('contactMessages', JSON.stringify(messages));
+            loadMessages();
+        }
+
+        function deleteMessage(index) {
+            if (confirm('Are you sure you want to delete this message?')) {
+                const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+                messages.splice(index, 1);
+                localStorage.setItem('contactMessages', JSON.stringify(messages));
+                loadMessages();
+                showMessage('Message deleted!', 'success');
+            }
+        }
+
+        // Settings Management
+        function showSettingsTab(tab) {
+            document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tab + 'Settings').classList.add('active');
+        }
+        
+        function loadSettings() {
+            // Load general settings
+            document.getElementById('blogTitle').value = localStorage.getItem('blogTitle') || "Ela's Blog";
+            document.getElementById('blogDescription').value = localStorage.getItem('blogDescription') || '';
+            document.getElementById('adminEmail').value = localStorage.getItem('adminEmail') || '';
+            document.getElementById('postsPerPage').value = localStorage.getItem('postsPerPage') || '3';
+            
+            // Load appearance settings
+            document.getElementById('themeColor').value = localStorage.getItem('themeColor') || '#ff6b9d';
+            document.getElementById('profileImage').value = localStorage.getItem('profileImage') || '';
+            document.getElementById('enableHearts').checked = localStorage.getItem('enableHearts') !== 'false';
+            document.getElementById('enableBubbles').checked = localStorage.getItem('enableBubbles') !== 'false';
+            document.getElementById('enableCursor').checked = localStorage.getItem('enableCursor') !== 'false';
+            
+            // Load social settings
+            document.getElementById('instagramUrl').value = localStorage.getItem('instagramUrl') || '';
+            document.getElementById('twitterUrl').value = localStorage.getItem('twitterUrl') || '';
+            document.getElementById('pinterestUrl').value = localStorage.getItem('pinterestUrl') || '';
+            document.getElementById('youtubeUrl').value = localStorage.getItem('youtubeUrl') || '';
+        }
+
+        function saveSettings(event) {
+            event.preventDefault();
+            
+            localStorage.setItem('blogTitle', document.getElementById('blogTitle').value);
+            localStorage.setItem('blogDescription', document.getElementById('blogDescription').value);
+            localStorage.setItem('adminEmail', document.getElementById('adminEmail').value);
+            localStorage.setItem('postsPerPage', document.getElementById('postsPerPage').value);
+            
+            showMessage('General settings saved!', 'success');
+        }
+        
+        function saveAppearanceSettings(event) {
+            event.preventDefault();
+            
+            localStorage.setItem('themeColor', document.getElementById('themeColor').value);
+            localStorage.setItem('profileImage', document.getElementById('profileImage').value);
+            localStorage.setItem('enableHearts', document.getElementById('enableHearts').checked);
+            localStorage.setItem('enableBubbles', document.getElementById('enableBubbles').checked);
+            localStorage.setItem('enableCursor', document.getElementById('enableCursor').checked);
+            
+            showMessage('Appearance settings saved!', 'success');
+        }
+        
+        function saveSocialSettings(event) {
+            event.preventDefault();
+            
+            localStorage.setItem('instagramUrl', document.getElementById('instagramUrl').value);
+            localStorage.setItem('twitterUrl', document.getElementById('twitterUrl').value);
+            localStorage.setItem('pinterestUrl', document.getElementById('pinterestUrl').value);
+            localStorage.setItem('youtubeUrl', document.getElementById('youtubeUrl').value);
+            
+            showMessage('Social media links saved!', 'success');
+        }
+        
+        function exportData() {
+            const data = {
+                posts: JSON.parse(localStorage.getItem('blogPosts') || '[]'),
+                comments: JSON.parse(localStorage.getItem('blogComments') || '[]'),
+                gallery: JSON.parse(localStorage.getItem('galleryImages') || '[]'),
+                projects: JSON.parse(localStorage.getItem('itProjects') || '[]'),
+                funFacts: JSON.parse(localStorage.getItem('funFacts') || '[]'),
+                messages: JSON.parse(localStorage.getItem('contactMessages') || '[]'),
+                settings: {
+                    blogTitle: localStorage.getItem('blogTitle'),
+                    blogDescription: localStorage.getItem('blogDescription'),
+                    adminEmail: localStorage.getItem('adminEmail'),
+                    themeColor: localStorage.getItem('themeColor'),
+                    socialLinks: {
+                        instagram: localStorage.getItem('instagramUrl'),
+                        twitter: localStorage.getItem('twitterUrl'),
+                        pinterest: localStorage.getItem('pinterestUrl'),
+                        youtube: localStorage.getItem('youtubeUrl')
+                    }
+                },
+                exportDate: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ela-blog-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showMessage('Data exported successfully!', 'success');
+        }
+        
+        function resetBlog() {
+            if (confirm('⚠️ Are you ABSOLUTELY sure? This will delete ALL your posts, comments, gallery, projects, and settings permanently!')) {
+                if (confirm('This action cannot be undone. Type "DELETE" to confirm:') && prompt('Type DELETE to confirm:') === 'DELETE') {
+                    localStorage.clear();
+                    showMessage('Blog reset complete! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                }
+            }
+        }
+        
+        // Handle file import
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('importFile').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const data = JSON.parse(e.target.result);
+                            
+                            if (confirm('This will replace all current data. Continue?')) {
+                                // Import all data
+                                if (data.posts) localStorage.setItem('blogPosts', JSON.stringify(data.posts));
+                                if (data.comments) localStorage.setItem('blogComments', JSON.stringify(data.comments));
+                                if (data.gallery) localStorage.setItem('galleryImages', JSON.stringify(data.gallery));
+                                if (data.projects) localStorage.setItem('itProjects', JSON.stringify(data.projects));
+                                if (data.funFacts) localStorage.setItem('funFacts', JSON.stringify(data.funFacts));
+                                if (data.messages) localStorage.setItem('contactMessages', JSON.stringify(data.messages));
+                                
+                                // Import settings
+                                if (data.settings) {
+                                    Object.keys(data.settings).forEach(key => {
+                                        if (typeof data.settings[key] === 'object') {
+                                            Object.keys(data.settings[key]).forEach(subKey => {
+                                                localStorage.setItem(subKey + 'Url', data.settings[key][subKey]);
+                                            });
+                                        } else {
+                                            localStorage.setItem(key, data.settings[key]);
+                                        }
+                                    });
+                                }
+                                
+                                showMessage('Data imported successfully! Refreshing...', 'success');
+                                setTimeout(() => location.reload(), 2000);
+                            }
+                        } catch (error) {
+                            showMessage('Invalid backup file!', 'error');
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            });
+        });
+
+        // Cursor animation
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.addEventListener('mousedown', () => cursor.classList.add('expand'));
+        document.addEventListener('mouseup', () => cursor.classList.remove('expand'));
+
+        // Projects management functions
+        function addProject(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('projectTitle').value;
+            const description = document.getElementById('projectDescription').value;
+            const image = document.getElementById('projectImage').value;
+            const technologies = document.getElementById('projectTech').value.split(',').map(tech => tech.trim());
+            const liveDemo = document.getElementById('projectDemo').value;
+            const sourceCode = document.getElementById('projectSource').value;
+            const codeSnippet = document.getElementById('projectCode').value;
+            
+            const project = {
+                title,
+                description,
+                image,
+                technologies,
+                liveDemo,
+                sourceCode,
+                codeSnippet
+            };
+            
+            const projects = JSON.parse(localStorage.getItem('itProjects') || '[]');
+            projects.unshift(project);
+            localStorage.setItem('itProjects', JSON.stringify(projects));
+            
+            // Reset form
+            event.target.reset();
+            
+            showMessage('💻 Project added successfully!', 'success');
+            loadProjectsAdmin();
+        }
+        
+        function loadProjectsAdmin() {
+            const projects = JSON.parse(localStorage.getItem('itProjects') || '[]');
+            const projectsList = document.getElementById('projectsList');
+            
+            if (projects.length === 0) {
+                projectsList.innerHTML = '<div class="empty-projects"><i class="fas fa-code"></i><p>No projects yet. Add your first project!</p></div>';
+                return;
+            }
+            
+            projectsList.innerHTML = `
+                <div class="projects-admin-grid">
+                    ${projects.map((project, index) => `
+                        <div class="project-admin-card">
+                            <div class="project-admin-image">
+                                <img src="${project.image}" alt="${project.title}">
+                            </div>
+                            <div class="project-admin-info">
+                                <h4>${project.title}</h4>
+                                <p>${project.description}</p>
+                                <div class="admin-tech-tags">
+                                    ${project.technologies.map(tech => `<span class="admin-tech-tag">${tech}</span>`).join('')}
+                                </div>
+                                <div class="project-admin-actions">
+                                    ${project.liveDemo && project.liveDemo.trim() ? `<a href="${project.liveDemo}" target="_blank" class="action-btn demo" title="View Demo"><i class="fas fa-external-link-alt"></i></a>` : ''}
+                                    <a href="${project.sourceCode}" target="_blank" class="action-btn code" title="View Code">
+                                        <i class="fab fa-github"></i>
+                                    </a>
+                                    <button onclick="deleteProject(${index})" class="action-btn delete" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        function deleteProject(index) {
+            if (confirm('🗑️ Are you sure you want to delete this project?')) {
+                const projects = JSON.parse(localStorage.getItem('itProjects') || '[]');
+                projects.splice(index, 1);
+                localStorage.setItem('itProjects', JSON.stringify(projects));
+                loadProjectsAdmin();
+                showMessage('💻 Project deleted!', 'success');
+            }
+        }
+
+        // Dropdown menu functions
+        function toggleDropdown() {
+            const dropdown = document.getElementById('adminDropdown');
+            const arrow = document.querySelector('.dropdown-arrow');
+            
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+                arrow.style.transform = 'rotate(0deg)';
+            } else {
+                dropdown.style.display = 'block';
+                arrow.style.transform = 'rotate(180deg)';
+            }
+        }
+        
+        function closeDropdown() {
+            const dropdown = document.getElementById('adminDropdown');
+            const arrow = document.querySelector('.dropdown-arrow');
+            dropdown.style.display = 'none';
+            arrow.style.transform = 'rotate(0deg)';
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.querySelector('.admin-dropdown');
+            if (!dropdown.contains(event.target)) {
+                closeDropdown();
+            }
+        });
+
+        // Fun Facts Management
+        function addFunFact(event) {
+            event.preventDefault();
+            
+            const icon = document.getElementById('factIcon').value.trim();
+            const text = document.getElementById('factText').value.trim();
+            
+            const fact = { icon, text };
+            
+            const facts = JSON.parse(localStorage.getItem('funFacts') || '[]');
+            facts.push(fact);
+            localStorage.setItem('funFacts', JSON.stringify(facts));
+            
+            // Reset form
+            event.target.reset();
+            
+            showMessage('😊 Fun fact added!', 'success');
+            loadAdminFunFacts();
+        }
+        
+        function deleteFunFact(index) {
+            if (confirm('Are you sure you want to delete this fun fact?')) {
+                const facts = JSON.parse(localStorage.getItem('funFacts') || '[]');
+                facts.splice(index, 1);
+                localStorage.setItem('funFacts', JSON.stringify(facts));
+                loadAdminFunFacts();
+                showMessage('Fun fact deleted!', 'success');
+            }
+        }
+        
+        function loadAdminFunFacts() {
+            const facts = JSON.parse(localStorage.getItem('funFacts') || '[]');
+            const factsList = document.getElementById('funFactsList');
+            
+            if (facts.length === 0) {
+                factsList.innerHTML = '<div class="empty-facts"><i class="fas fa-smile"></i><p>No fun facts yet. Add your first fun fact!</p></div>';
+                return;
+            }
+            
+            factsList.innerHTML = `
+                <div class="facts-admin-grid">
+                    ${facts.map((fact, index) => `
+                        <div class="fact-admin-item">
+                            <div class="fact-preview">
+                                <span class="fact-icon">${fact.icon}</span>
+                                <span class="fact-text">${fact.text}</span>
+                            </div>
+                            <button onclick="deleteFunFact(${index})" class="action-btn delete" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Initialize
+        checkAdminAccess();
+        loadPosts();
+    </script>
+</body>
+</html>

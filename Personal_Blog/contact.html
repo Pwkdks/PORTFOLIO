@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Ela's Blog</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="cursor"></div>
+    
+    <header>
+        <div class="logo">
+            <a href="main.html" style="text-decoration: none; color: inherit;">
+                <span>E</span>la's Blog
+            </a>
+            <div class="logo-hearts">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+            </div>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="main.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="posts.html">Posts</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+                <li><a href="notifications.html">🔔</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="contact-page">
+        <div class="floating-hearts">
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-heart"></i>
+        </div>
+
+        <div class="bubbles">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+        </div>
+
+        <section class="contact-hero">
+            <h1 class="animated-title">Let's <span class="highlight">Connect</span></h1>
+            <p class="hero-subtitle">I'd love to hear from you! Drop me a message and let's create something beautiful together.</p>
+            <div class="hero-decoration">
+                <i class="fas fa-heart pulse"></i>
+                <i class="fas fa-star sparkle"></i>
+                <i class="fas fa-heart pulse"></i>
+            </div>
+        </section>
+
+        <div class="contact-container">
+            <div class="contact-form-wrapper">
+                <div class="form-decoration">
+                    <i class="fas fa-envelope bounce"></i>
+                </div>
+                <h2 class="form-title">Send me a message</h2>
+                
+                <form class="contact-form" onsubmit="sendMessage(event)">
+                    <div class="input-wrapper">
+                        <input type="text" id="name" required>
+                        <label for="name">Your Beautiful Name</label>
+                        <div class="input-line"></div>
+                    </div>
+                    
+                    <div class="input-wrapper">
+                        <input type="email" id="email" required>
+                        <label for="email">Email Address</label>
+                        <div class="input-line"></div>
+                    </div>
+                    
+                    <div class="input-wrapper">
+                        <input type="text" id="subject" required>
+                        <label for="subject">What's on your mind?</label>
+                        <div class="input-line"></div>
+                    </div>
+                    
+                    <div class="input-wrapper">
+                        <textarea id="message" rows="4" required></textarea>
+                        <label for="message">Your lovely message</label>
+                        <div class="input-line"></div>
+                    </div>
+                    
+                    <button type="submit" class="magic-btn">
+                        <span class="btn-text">Send with Love</span>
+                        <i class="fas fa-heart"></i>
+                        <div class="btn-sparkles">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </button>
+                </form>
+            </div>
+
+            <div class="contact-info-wrapper">
+                <div class="info-card">
+                    <div class="card-header">
+                        <i class="fas fa-heart heartbeat"></i>
+                        <h3>Get in Touch</h3>
+                    </div>
+                    
+                    <div class="info-items">
+                        <div class="info-item" data-aos="fade-up">
+                            <div class="info-icon email-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="info-content">
+                                <h4>Email Me</h4>
+                                <p id="contactEmail">ela@example.com</p>
+                                <span>I reply with love ♡</span>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item" data-aos="fade-up" data-aos-delay="100">
+                            <div class="info-icon location-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="info-content">
+                                <h4>My Creative Space</h4>
+                                <p>Somewhere Beautiful</p>
+                                <span>Where magic happens ✨</span>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item" data-aos="fade-up" data-aos-delay="200">
+                            <div class="info-icon time-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="info-content">
+                                <h4>Response Time</h4>
+                                <p>Within 24 hours</p>
+                                <span>Usually much faster! 💫</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="social-section">
+                        <h4>Follow my journey</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-link twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-link pinterest">
+                                <i class="fab fa-pinterest"></i>
+                            </a>
+                            <a href="#" class="social-link youtube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>&copy; 2025 Ela's Blog. Made with <i class="fas fa-heart"></i></p>
+        </div>
+    </footer>
+
+    <script>
+        // Cursor animation
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.addEventListener('mousedown', () => cursor.classList.add('expand'));
+        document.addEventListener('mouseup', () => cursor.classList.remove('expand'));
+
+        // Load dynamic email on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedEmail = localStorage.getItem('adminEmail');
+            if (savedEmail) {
+                document.getElementById('contactEmail').textContent = savedEmail;
+            }
+        });
+
+        // Form submission
+        function sendMessage(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+            const newMessage = {
+                id: Date.now(),
+                name, email, subject, message,
+                date: new Date().toLocaleDateString(),
+                read: false,
+                replied: false
+            };
+            
+            messages.unshift(newMessage);
+            localStorage.setItem('contactMessages', JSON.stringify(messages));
+            
+            showSuccessMessage();
+            event.target.reset();
+        }
+        
+        function showSuccessMessage() {
+            const btn = document.querySelector('.magic-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fas fa-check"></i> Message Sent with Love!';
+            btn.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = '';
+            }, 3000);
+        }
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.info-item').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(30px)';
+            item.style.transition = 'all 0.6s ease';
+            observer.observe(item);
+        });
+    </script>
+</body>
+</html>

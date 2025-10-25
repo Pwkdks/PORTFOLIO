@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - Ela's Blog</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="cursor"></div>
+    
+    <header>
+        <div class="logo">
+            <a href="main.html">
+                <span>E</span>la's Blog
+            </a>
+            <div class="logo-hearts">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+            </div>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="main.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="posts.html">Posts</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="notifications.html" class="active">🔔</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="notifications-page">
+        <div class="floating-hearts">
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-heart"></i>
+        </div>
+
+        <section class="notifications-hero">
+            <h1 class="animated-title">Your <span class="highlight">Notifications</span></h1>
+            <p class="hero-subtitle">Check if Ela has replied to your messages! 💌</p>
+        </section>
+
+        <div class="notifications-container">
+            <div class="check-form">
+                <h2>Check Your Messages</h2>
+                <p>Enter your email to see if there are any replies from Ela:</p>
+                <form onsubmit="checkNotifications(event)">
+                    <div class="input-wrapper">
+                        <input type="email" id="userEmail" required>
+                        <label for="userEmail">Your Email Address</label>
+                        <div class="input-line"></div>
+                    </div>
+                    <button type="submit" class="magic-btn">
+                        <span class="btn-text">Check Messages</span>
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div class="notifications-list" id="notificationsList">
+                <!-- Notifications will appear here -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>&copy; 2025 Ela's Blog. Made with <i class="fas fa-heart"></i></p>
+        </div>
+    </footer>
+
+    <script>
+        // Cursor animation
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.addEventListener('mousedown', () => cursor.classList.add('expand'));
+        document.addEventListener('mouseup', () => cursor.classList.remove('expand'));
+
+        function checkNotifications(event) {
+            event.preventDefault();
+            const email = document.getElementById('userEmail').value;
+            const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+            const notifications = JSON.parse(localStorage.getItem('userNotifications') || '[]');
+            
+            const userMessages = messages.filter(msg => msg.email.toLowerCase() === email.toLowerCase());
+            const userNotifications = notifications.filter(notif => notif.email.toLowerCase() === email.toLowerCase());
+            
+            const notificationsList = document.getElementById('notificationsList');
+            
+            if (userMessages.length === 0 && userNotifications.length === 0) {
+                notificationsList.innerHTML = `
+                    <div class="no-notifications">
+                        <i class="fas fa-inbox"></i>
+                        <h3>No messages found</h3>
+                        <p>We couldn't find any messages from this email address.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let content = '';
+            
+            // Show notifications first
+            if (userNotifications.length > 0) {
+                content += '<h3 class="section-title">💌 New Replies from Ela</h3>';
+                userNotifications.forEach(notif => {
+                    content += `
+                        <div class="notification-item new-reply">
+                            <div class="notification-icon">
+                                <i class="fas fa-reply"></i>
+                            </div>
+                            <div class="notification-content">
+                                <h4>Ela replied to your message!</h4>
+                                <p><strong>Subject:</strong> ${notif.subject}</p>
+                                <p><strong>Reply:</strong> ${notif.reply}</p>
+                                <span class="notification-date">📅 ${notif.date}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            // Show message status
+            content += '<h3 class="section-title">📬 Your Messages</h3>';
+            userMessages.forEach(msg => {
+                content += `
+                    <div class="notification-item ${msg.replied ? 'replied' : 'pending'}">
+                        <div class="notification-icon">
+                            <i class="fas fa-${msg.replied ? 'check-circle' : 'clock'}"></i>
+                        </div>
+                        <div class="notification-content">
+                            <h4>${msg.subject}</h4>
+                            <p class="message-preview">${msg.message.substring(0, 100)}${msg.message.length > 100 ? '...' : ''}</p>
+                            <div class="message-status">
+                                <span class="status-badge ${msg.replied ? 'replied' : 'pending'}">
+                                    ${msg.replied ? '✅ Replied' : '⏳ Pending'}
+                                </span>
+                                <span class="message-date">📅 ${msg.date}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            notificationsList.innerHTML = content;
+        }
+    </script>
+
+    <style>
+        .notifications-page {
+            min-height: 100vh;
+            padding: 100px 5% 50px;
+            background: linear-gradient(135deg, #fff5f8 0%, #ffdbea 100%);
+            position: relative;
+        }
+
+        .notifications-hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .notifications-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .check-form {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .check-form h2 {
+            color: #ff6b9d;
+            margin-bottom: 15px;
+        }
+
+        .check-form p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .notifications-list {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            color: #ff6b9d;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ffdbea;
+        }
+
+        .notification-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            border-left: 4px solid #ddd;
+            background: #f9f9f9;
+        }
+
+        .notification-item.new-reply {
+            border-left-color: #ff6b9d;
+            background: linear-gradient(135deg, #fff 0%, #fff5f8 100%);
+        }
+
+        .notification-item.replied {
+            border-left-color: #27ae60;
+        }
+
+        .notification-item.pending {
+            border-left-color: #f39c12;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .new-reply .notification-icon {
+            background: #ff6b9d;
+            color: white;
+        }
+
+        .replied .notification-icon {
+            background: #27ae60;
+            color: white;
+        }
+
+        .pending .notification-icon {
+            background: #f39c12;
+            color: white;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-content h4 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .message-preview {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .message-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-badge.replied {
+            background: #27ae60;
+            color: white;
+        }
+
+        .status-badge.pending {
+            background: #f39c12;
+            color: white;
+        }
+
+        .message-date, .notification-date {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .no-notifications {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .no-notifications i {
+            font-size: 4rem;
+            color: #ff6b9d;
+            margin-bottom: 20px;
+        }
+
+        .no-notifications h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+    </style>
+</body>
+</html>

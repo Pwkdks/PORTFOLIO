@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ela's Personal Blog</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="modal-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="cursor"></div>
+    
+    <header>
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <span>E</span>la's Blog
+            </a>
+            <div class="logo-hearts" onclick="secretLogin()" title="♥">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+            </div>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="main.html" class="active">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="posts.html">Posts</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="notifications.html">🔔</a></li>
+            </ul>
+
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        
+        <section class="hero">
+            <div class="bubbles">
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+            </div>
+            
+            <div class="personal-info">
+                <div class="introduction">
+                    <h1 class="animated-text">Hello, I'm <span class="highlight">Ela</span></h1>
+                    <p class="tagline">Explore my thoughts, experiences and stories</p>
+                    <p class="bio">Welcome to my personal space where I share my journey, creative projects, and all the things that bring joy to my life!</p>
+                    <a href="posts.html" class="explore-btn">
+                        <span>Explore More</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="profile-container">
+                    <div class="profile-image">
+                        <img src="mypic.jpeg" alt="Ela's Profile Photo">
+                    </div>
+                    <div class="floating-hearts">
+                        <i class="fas fa-heart"></i>
+                        <i class="fas fa-heart"></i>
+                        <i class="fas fa-heart"></i>
+                        <i class="fas fa-heart"></i>
+                        <i class="fas fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-posts">
+            <h2>Latest <span class="highlight">Posts</span></h2>
+            <div class="posts-container">
+                <!-- Posts will be dynamically loaded -->
+            </div>
+        </section>
+
+        <!-- Journal Modal -->
+        <div id="postModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <div class="journal-pages" id="journalPages">
+                    <!-- Post content will be loaded here -->
+                </div>
+                <div class="page-navigation">
+                    <button class="nav-btn prev" onclick="previousPage()" id="prevBtn">← Previous</button>
+                    <span class="page-indicator">Page <span id="currentPage">1</span> of <span id="totalPages">3</span></span>
+                    <button class="nav-btn next" onclick="nextPage()" id="nextBtn">Next →</button>
+                </div>
+            </div>
+        </div>
+
+        <section class="newsletter">
+            <div class="newsletter-content">
+                <h2>Stay <span class="highlight">Updated</span></h2>
+                <p>Subscribe to my newsletter for the latest posts and updates!</p>
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" id="subscribeEmail" placeholder="Your email address" required>
+                    <button type="submit">Subscribe <i class="fas fa-paper-plane"></i></button>
+                </form>
+                <div id="subscribeMessage" class="subscribe-message"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>&copy; 2023 Ela's Blog. Made with <i class="fas fa-heart"></i></p>
+        </div>
+    </footer>
+
+    <script>
+        // Check if user is logged in
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('userLoggedIn');
+            if (isLoggedIn) {
+                showLogoutOption();
+            }
+        }
+        
+        function showLogoutOption() {
+            const nav = document.querySelector('nav');
+            const logoutBtn = document.createElement('div');
+            logoutBtn.className = 'logout-btn';
+            logoutBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i>';
+            logoutBtn.title = 'Logout';
+            logoutBtn.onclick = logout;
+            nav.appendChild(logoutBtn);
+        }
+        
+        function logout() {
+            const logoutBtn = document.querySelector('.logout-btn');
+            logoutBtn.style.animation = 'heartPulse 0.6s ease';
+            
+            setTimeout(() => {
+                window.location.href = 'logout.html';
+            }, 300);
+        }
+        
+        function secretLogin() {
+            const hearts = document.querySelector('.logo-hearts');
+            hearts.style.animation = 'heartPulse 0.6s ease';
+            
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 300);
+        }
+
+        // Initialize default posts if none exist
+        function initializeDefaultPosts() {
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            
+            if (posts.length === 0) {
+                const defaultPosts = [
+                    {
+                        title: "My Creative Journey",
+                        date: "June 15, 2023",
+                        image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=600&h=400&fit=crop",
+                        excerpt: "When I first began exploring the world of design, I didn't realize how much creativity would influence my outlook on life...",
+                        content: ["When I first began exploring the world of design, I didn't realize how much creativity would influence my outlook on life. From sketching simple ideas to bringing full projects to life, I learned that creativity is about problem-solving, storytelling, and connecting with people. It started with a simple drawing pad and colored pencils that my mom bought me when I was seven. I would spend hours creating imaginary worlds, characters, and stories through my drawings. Over time, I've discovered that every creative challenge shapes how I see and express the world around me. Each project taught me something new about myself and my capabilities. Today, I continue to grow and evolve as a creative person. This journey has taught me that creativity isn't just about the final product—it's about the process, the learning, and the joy of bringing ideas to life."]
+                    },
+                    {
+                        title: "Finding Inspiration",
+                        date: "July 3, 2023",
+                        image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop",
+                        excerpt: "Inspiration can be found everywhere — in nature, art, or even daily life. I love exploring photography, listening to music...",
+                        content: ["Inspiration can be found everywhere — in nature, art, or even daily life. I love exploring photography, listening to music, and watching how others express themselves creatively. These help me refocus and push my imagination. Sometimes the best ideas come when I'm not actively looking for them — during a walk in the park, while reading a book, or even in conversations with friends. I've learned to keep a creative journal where I capture these moments of inspiration, no matter how small they might seem."]
+                    },
+                    {
+                        title: "Self-Care Routine",
+                        date: "August 22, 2023",
+                        image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop",
+                        excerpt: "Balancing creativity and rest is essential. I've learned to take short breaks, meditate, and go for walks...",
+                        content: ["Balancing creativity and rest is essential. I've learned to take short breaks, meditate, and go for walks when I feel overwhelmed. It keeps my mind fresh and helps me come back to projects with renewed energy. Self-care isn't selfish — it's necessary for sustainable creativity. I've developed a routine that includes morning meditation, regular exercise, and setting boundaries between work and personal time. This balance has made me not only more productive but also happier and more fulfilled in my creative work."]
+                    }
+                ];
+                localStorage.setItem('blogPosts', JSON.stringify(defaultPosts));
+            }
+        }
+        
+        // Load and display the 3 latest posts
+        function loadPosts() {
+            initializeDefaultPosts();
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            const postsContainer = document.querySelector('.posts-container');
+            
+            // Clear existing posts first
+            postsContainer.innerHTML = '';
+            
+            // Show only the 3 most recent posts (newest first)
+            const latestPosts = posts.slice(0, 3);
+            
+            if (latestPosts.length === 0) {
+                postsContainer.innerHTML = '<p class="no-posts">No posts available yet. Please check the admin panel.</p>';
+                return;
+            }
+            
+            console.log('Loading posts:', latestPosts.length);
+            
+            latestPosts.forEach((post, index) => {
+                const postCard = document.createElement('div');
+                postCard.className = 'post-card';
+                postCard.style.opacity = '0';
+                postCard.style.transform = 'translateY(30px)';
+                postCard.style.display = 'block';
+                postCard.style.marginBottom = '30px';
+                postCard.innerHTML = `
+                    <div class="post-img" style="background-image: url('${post.image}')"></div>
+                    <div class="post-content">
+                        <span class="post-date">${post.date}</span>
+                        <h3>${post.title}</h3>
+                        <p>${post.excerpt || post.content[0].substring(0, 100) + '...'}</p>
+                        <a href="post.html?post=${index}" class="read-more">Read More</a>
+                    </div>
+                    <div class="like-button" onclick="toggleLike(${index})" data-post="${index}">
+                        <i class="fas fa-heart"></i>
+                        <span class="like-count">0</span>
+                    </div>
+                `;
+                postsContainer.appendChild(postCard);
+                
+                // Animate the post card
+                setTimeout(() => {
+                    postCard.style.transition = 'all 0.5s ease';
+                    postCard.style.opacity = '1';
+                    postCard.style.transform = 'translateY(0)';
+                }, index * 200);
+                
+                // Update like count
+                updateLikeDisplay(index);
+            });
+        }
+        
+        function openPost(index) {
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            let post;
+            
+            if (index === 'default') {
+                post = {
+                    title: "My Creative Journey",
+                    date: "June 15, 2023",
+                    content: ["When I first began exploring the world of design, I didn't realize how much creativity would influence my outlook on life..."]
+                };
+            } else {
+                post = posts[index];
+            }
+            
+            document.getElementById('postModal').style.display = 'block';
+            displayPost(post);
+        }
+        
+        function displayPost(post) {
+            const journalPages = document.getElementById('journalPages');
+            journalPages.innerHTML = `
+                <div class="journal-page active">
+                    <h2>${post.title}</h2>
+                    <p class="post-date">${post.date}</p>
+                    <div class="post-text">${post.content[0]}</div>
+                </div>
+            `;
+        }
+        
+        function closeModal() {
+            document.getElementById('postModal').style.display = 'none';
+        }
+        
+        // Initialize and refresh posts
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+            loadPosts();
+        });
+        
+        // Refresh posts when page becomes visible (when returning from admin)
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                loadPosts();
+            }
+        });
+        
+        // Modal functions for posts
+        function nextPage() {
+            // Modal navigation functionality
+        }
+
+        function previousPage() {
+            // Modal navigation functionality
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes heartPulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.3); }
+                100% { transform: scale(1); }
+            }
+            @keyframes heartBounce {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.3); }
+                100% { transform: scale(1); }
+            }
+            @keyframes heartLike {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.4); color: #ff1744; }
+                100% { transform: scale(1); }
+            }
+            @keyframes countPop {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.2); }
+                100% { transform: scale(1); }
+            }
+            .like-button {
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .like-button:hover {
+                transform: scale(1.05);
+            }
+            .logout-btn {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                width: 35px;
+                height: 35px;
+                background: rgba(255, 107, 157, 0.1);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                color: #ff6b9d;
+                font-size: 0.9rem;
+            }
+            .logout-btn:hover {
+                background: rgba(255, 107, 157, 0.2);
+                transform: scale(1.1);
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Like functionality
+        function toggleLike(postIndex) {
+            const likes = JSON.parse(localStorage.getItem('postLikes') || '{}');
+            const likeButton = document.querySelector(`[data-post="${postIndex}"]`);
+            const heart = likeButton.querySelector('i');
+            const countSpan = likeButton.querySelector('.like-count');
+            
+            if (!likes[postIndex]) {
+                likes[postIndex] = 0;
+            }
+            
+            likes[postIndex]++;
+            localStorage.setItem('postLikes', JSON.stringify(likes));
+            
+            // Animate heart
+            heart.style.animation = 'heartLike 0.6s ease';
+            heart.style.color = '#ff6b9d';
+            
+            // Update count with animation
+            countSpan.style.animation = 'countPop 0.4s ease';
+            countSpan.textContent = likes[postIndex];
+            
+            // Reset animations
+            setTimeout(() => {
+                heart.style.animation = '';
+                countSpan.style.animation = '';
+            }, 600);
+        }
+        
+        function updateLikeDisplay(postIndex) {
+            const likes = JSON.parse(localStorage.getItem('postLikes') || '{}');
+            const likeButton = document.querySelector(`[data-post="${postIndex}"]`);
+            if (likeButton) {
+                const countSpan = likeButton.querySelector('.like-count');
+                countSpan.textContent = likes[postIndex] || 0;
+            }
+        }
+        
+        // Newsletter subscription
+        async function subscribeNewsletter(event) {
+            event.preventDefault();
+            const email = document.getElementById('subscribeEmail').value;
+            const messageDiv = document.getElementById('subscribeMessage');
+            
+            // Frontend-only subscription
+            const result = subscribeNewsletterLocal(email);
+
+            messageDiv.innerHTML = `<p class="${result.success ? 'success' : 'error'}">${result.message}</p>`;
+
+            if (result.success) {
+                document.getElementById('subscribeEmail').value = '';
+            } else {
+                // Clear input field even for "already subscribed" message
+                document.getElementById('subscribeEmail').value = '';
+            }
+
+            setTimeout(() => {
+                messageDiv.innerHTML = '';
+            }, 5000);
+        }
+    </script>
+    <script src="animations.js"></script>
+</body>
+</html>

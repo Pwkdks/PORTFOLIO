@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Posts - Ela's Blog</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="modal-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="cursor"></div>
+    
+    <header>
+        <div class="logo">
+            <a href="main.html" style="text-decoration: none; color: inherit;">
+                <span>E</span>la's Blog
+            </a>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="main.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="posts.html" class="active">Posts</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="notifications.html">🔔</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="posts-page">
+            <div class="container">
+                <h1>All <span class="highlight">Posts</span></h1>
+                <div class="all-posts-container" id="allPostsContainer">
+                    <!-- Posts will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Post Modal with Comments -->
+        <div id="postModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <div class="post-full" id="postFull">
+                    <!-- Full post content -->
+                </div>
+                <div class="comments-section">
+                    <div class="comments-header">
+                        <h3><i class="fas fa-comments"></i> Share Your Thoughts</h3>
+                        <p class="comments-subtitle">Join the conversation and let me know what you think!</p>
+                    </div>
+                    
+                    <div class="comment-form">
+                        <h4><i class="fas fa-edit"></i> Leave a Comment</h4>
+                        <div class="form-row">
+                            <input type="text" id="commentName" placeholder="Your name" required>
+                            <input type="email" id="commentEmail" placeholder="Your email (optional)">
+                        </div>
+                        <textarea id="commentText" placeholder="Share your thoughts, feedback, or questions..." rows="4" required></textarea>
+                        <button onclick="addComment()" class="comment-btn">
+                            <i class="fas fa-paper-plane"></i> Post Comment
+                        </button>
+                        <p class="comment-note">Your comment will be reviewed before being published.</p>
+                    </div>
+                    
+                    <div class="comments-list" id="commentsList">
+                        <!-- Comments will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>&copy; 2025 Ela's Blog. Made with <i class="fas fa-heart"></i></p>
+        </div>
+    </footer>
+
+    <script>
+        let currentPostIndex = null;
+
+        function initializeDefaultPosts() {
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            
+            if (posts.length === 0) {
+                const defaultPosts = [
+                    {
+                        title: "My Creative Journey",
+                        date: "June 15, 2023",
+                        image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=600&h=400&fit=crop",
+                        excerpt: "When I first began exploring the world of design, I didn't realize how much creativity would influence my outlook on life...",
+                        content: ["When I first began exploring the world of design, I didn't realize how much creativity would influence my outlook on life. From sketching simple ideas to bringing full projects to life, I learned that creativity is about problem-solving, storytelling, and connecting with people. It started with a simple drawing pad and colored pencils that my mom bought me when I was seven. I would spend hours creating imaginary worlds, characters, and stories through my drawings. Over time, I've discovered that every creative challenge shapes how I see and express the world around me. Each project taught me something new about myself and my capabilities. Today, I continue to grow and evolve as a creative person. This journey has taught me that creativity isn't just about the final product—it's about the process, the learning, and the joy of bringing ideas to life."]
+                    },
+                    {
+                        title: "Finding Inspiration",
+                        date: "July 3, 2023",
+                        image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop",
+                        excerpt: "Inspiration can be found everywhere — in nature, art, or even daily life. I love exploring photography, listening to music...",
+                        content: ["Inspiration can be found everywhere — in nature, art, or even daily life. I love exploring photography, listening to music, and watching how others express themselves creatively. These help me refocus and push my imagination. Sometimes the best ideas come when I'm not actively looking for them — during a walk in the park, while reading a book, or even in conversations with friends. I've learned to keep a creative journal where I capture these moments of inspiration, no matter how small they might seem."]
+                    },
+                    {
+                        title: "Self-Care Routine",
+                        date: "August 22, 2023",
+                        image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop",
+                        excerpt: "Balancing creativity and rest is essential. I've learned to take short breaks, meditate, and go for walks...",
+                        content: ["Balancing creativity and rest is essential. I've learned to take short breaks, meditate, and go for walks when I feel overwhelmed. It keeps my mind fresh and helps me come back to projects with renewed energy. Self-care isn't selfish — it's necessary for sustainable creativity. I've developed a routine that includes morning meditation, regular exercise, and setting boundaries between work and personal time. This balance has made me not only more productive but also happier and more fulfilled in my creative work."]
+                    }
+                ];
+                localStorage.setItem('blogPosts', JSON.stringify(defaultPosts));
+            }
+        }
+
+        function loadAllPosts() {
+            initializeDefaultPosts();
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            const container = document.getElementById('allPostsContainer');
+            
+            if (posts.length === 0) {
+                container.innerHTML = '<p class="no-posts">No posts available yet.</p>';
+                return;
+            }
+            
+            container.innerHTML = posts.map((post, index) => `
+                <div class="post-card">
+                    <div class="post-img" style="background-image: url('${post.image}')"></div>
+                    <div class="post-content">
+                        <span class="post-date">${post.date}</span>
+                        <h3>${post.title}</h3>
+                        <p>${post.excerpt || post.content[0].substring(0, 150) + '...'}</p>
+                        <a href="post.html?post=${index}" class="read-more">Read More</a>
+                    </div>
+                    <div class="like-button" onclick="toggleLike(${index})" data-post="${index}">
+                        <i class="fas fa-heart"></i>
+                        <span class="like-count">0</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Update like counts after rendering
+            setTimeout(updateAllLikeDisplays, 50);
+        }
+
+        function openFullPost(index) {
+            currentPostIndex = index;
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            const post = posts[index];
+            
+            document.getElementById('postFull').innerHTML = `
+                <div class="post-header">
+                    <h2 style="color: #ff6b9d; margin-bottom: 10px;">${post.title}</h2>
+                    <p class="post-date" style="color: #999; margin-bottom: 20px;"><i class="fas fa-calendar"></i> ${post.date}</p>
+                </div>
+                <div class="post-image" style="margin-bottom: 20px;">
+                    <img src="${post.image}" alt="${post.title}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 10px;">
+                </div>
+                <div class="post-text" style="line-height: 1.6; color: #333; font-size: 1.1rem;">
+                    ${post.content[0]}
+                </div>
+            `;
+            
+            loadComments(index);
+            const modal = document.getElementById('postModal');
+            modal.style.display = 'flex';
+            modal.style.alignItems = 'center';
+            modal.style.justifyContent = 'center';
+        }
+
+        function addComment() {
+            const name = document.getElementById('commentName').value.trim();
+            const email = document.getElementById('commentEmail').value.trim();
+            const text = document.getElementById('commentText').value.trim();
+            
+            if (!name || !text) {
+                showCommentMessage('Please fill in your name and comment.', 'error');
+                return;
+            }
+            
+            const comment = {
+                name,
+                email,
+                text,
+                date: new Date().toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                }),
+                postIndex: currentPostIndex,
+                approved: false
+            };
+            
+            const comments = JSON.parse(localStorage.getItem('blogComments') || '[]');
+            comments.push(comment);
+            localStorage.setItem('blogComments', JSON.stringify(comments));
+            
+            // Clear form
+            document.getElementById('commentName').value = '';
+            document.getElementById('commentEmail').value = '';
+            document.getElementById('commentText').value = '';
+            
+            showCommentMessage('Thank you! Your comment has been submitted and is awaiting approval.', 'success');
+            loadComments(currentPostIndex);
+        }
+        
+        function showCommentMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `comment-message ${type}`;
+            messageDiv.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
+            
+            const form = document.querySelector('.comment-form');
+            form.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 4000);
+        }
+
+        function loadComments(postIndex) {
+            const comments = JSON.parse(localStorage.getItem('blogComments') || '[]');
+            const postComments = comments.filter(c => c.postIndex === postIndex && c.approved);
+            const commentsList = document.getElementById('commentsList');
+            
+            if (postComments.length === 0) {
+                commentsList.innerHTML = '<p class="no-comments">No comments yet. Be the first to comment!</p>';
+                return;
+            }
+            
+            commentsList.innerHTML = postComments.map(comment => `
+                <div class="comment">
+                    <div class="comment-header">
+                        <strong>${comment.name}</strong>
+                        <span class="comment-date">${comment.date}</span>
+                    </div>
+                    <p>${comment.text}</p>
+                </div>
+            `).join('');
+        }
+
+        function closeModal() {
+            document.getElementById('postModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside content
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('postModal');
+            const modalContent = document.querySelector('.modal-content');
+            if (event.target === modal && !modalContent.contains(event.target)) {
+                closeModal();
+            }
+        });
+
+        // Like functionality
+        function toggleLike(postIndex) {
+            const likes = JSON.parse(localStorage.getItem('postLikes') || '{}');
+            const likeButton = document.querySelector(`[data-post="${postIndex}"]`);
+            const heart = likeButton.querySelector('i');
+            const countSpan = likeButton.querySelector('.like-count');
+            
+            if (!likes[postIndex]) {
+                likes[postIndex] = 0;
+            }
+            
+            likes[postIndex]++;
+            localStorage.setItem('postLikes', JSON.stringify(likes));
+            
+            // Animate heart
+            heart.style.animation = 'heartLike 0.6s ease';
+            heart.style.color = '#ff6b9d';
+            
+            // Update count with animation
+            countSpan.style.animation = 'countPop 0.4s ease';
+            countSpan.textContent = likes[postIndex];
+            
+            // Reset animations
+            setTimeout(() => {
+                heart.style.animation = '';
+                countSpan.style.animation = '';
+            }, 600);
+        }
+        
+        function updateAllLikeDisplays() {
+            const likes = JSON.parse(localStorage.getItem('postLikes') || '{}');
+            document.querySelectorAll('.like-button').forEach((button, index) => {
+                const countSpan = button.querySelector('.like-count');
+                countSpan.textContent = likes[index] || 0;
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAllPosts();
+            setTimeout(updateAllLikeDisplays, 100);
+        });
+    </script>
+</body>
+</html>

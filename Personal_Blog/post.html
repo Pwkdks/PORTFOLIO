@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post - Ela's Blog</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="cursor"></div>
+    
+    <header>
+        <div class="logo">
+            <a href="main.html" style="text-decoration: none; color: inherit;">
+                <span>E</span>la's Blog
+            </a>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="main.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="posts.html">Posts</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="notifications.html">🔔</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="post-page">
+        <div class="container">
+            <div class="post-content" id="postContent">
+                <!-- Post content will be loaded here -->
+            </div>
+            
+            <div class="comments-section">
+                <div class="comments-header">
+                    <h3><i class="fas fa-comments"></i> Share Your Thoughts</h3>
+                    <p class="comments-subtitle">Join the conversation and let me know what you think!</p>
+                </div>
+                
+                <div class="comment-form">
+                    <h4><i class="fas fa-edit"></i> Leave a Comment</h4>
+                    <div class="form-row">
+                        <input type="text" id="commentName" placeholder="Your name" required>
+                        <input type="email" id="commentEmail" placeholder="Your email (optional)">
+                    </div>
+                    <textarea id="commentText" placeholder="Share your thoughts, feedback, or questions..." rows="4" required></textarea>
+                    <button onclick="addComment()" class="comment-btn">
+                        <i class="fas fa-paper-plane"></i> Post Comment
+                    </button>
+                    <p class="comment-note">Your comment will be reviewed before being published.</p>
+                </div>
+                
+                <div class="comments-list" id="commentsList">
+                    <!-- Comments will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>&copy; 2025 Ela's Blog. Made with <i class="fas fa-heart"></i></p>
+        </div>
+    </footer>
+
+    <script>
+        let currentPostIndex = null;
+
+        function loadPost() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postIndex = urlParams.get('post');
+            
+            if (postIndex === null) {
+                window.location.href = 'posts.html';
+                return;
+            }
+            
+            currentPostIndex = parseInt(postIndex);
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            const post = posts[currentPostIndex];
+            
+            if (!post) {
+                window.location.href = 'posts.html';
+                return;
+            }
+            
+            document.getElementById('postContent').innerHTML = `
+                <div class="journal-container">
+                    <div class="journal-page">
+                        <div class="journal-header">
+                            <div class="journal-date">${post.date}</div>
+                            <div class="journal-decoration">
+                                <i class="fas fa-heart"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-heart"></i>
+                            </div>
+                        </div>
+                        
+                        <h1 class="journal-title">${post.title}</h1>
+                        
+                        <div class="journal-image">
+                            <img src="${post.image}" alt="${post.title}">
+                            <div class="image-frame"></div>
+                        </div>
+                        
+                        <div class="journal-content">
+                            <div class="journal-lines"></div>
+                            <p class="journal-text">${post.content[0]}</p>
+                        </div>
+                        
+                        <div class="journal-footer">
+                            <div class="journal-signature">~ Ela ♥</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            loadComments(currentPostIndex);
+        }
+
+        function addComment() {
+            const name = document.getElementById('commentName').value.trim();
+            const email = document.getElementById('commentEmail').value.trim();
+            const text = document.getElementById('commentText').value.trim();
+            
+            if (!name || !text) {
+                showCommentMessage('Please fill in your name and comment.', 'error');
+                return;
+            }
+            
+            const comment = {
+                name,
+                email,
+                text,
+                date: new Date().toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                }),
+                postIndex: currentPostIndex,
+                approved: false
+            };
+            
+            const comments = JSON.parse(localStorage.getItem('blogComments') || '[]');
+            comments.push(comment);
+            localStorage.setItem('blogComments', JSON.stringify(comments));
+            
+            document.getElementById('commentName').value = '';
+            document.getElementById('commentEmail').value = '';
+            document.getElementById('commentText').value = '';
+            
+            showCommentMessage('Thank you! Your comment has been submitted and is awaiting approval.', 'success');
+            loadComments(currentPostIndex);
+        }
+
+        function loadComments(postIndex) {
+            const comments = JSON.parse(localStorage.getItem('blogComments') || '[]');
+            const postComments = comments.filter(c => c.postIndex === postIndex && c.approved);
+            const commentsList = document.getElementById('commentsList');
+            
+            if (postComments.length === 0) {
+                commentsList.innerHTML = '<p class="no-comments">No comments yet. Be the first to comment!</p>';
+                return;
+            }
+            
+            commentsList.innerHTML = postComments.map(comment => `
+                <div class="comment">
+                    <div class="comment-header">
+                        <strong>${comment.name}</strong>
+                        <span class="comment-date"><i class="fas fa-clock"></i> ${comment.date}</span>
+                    </div>
+                    <p>${comment.text}</p>
+                </div>
+            `).join('');
+        }
+
+        function showCommentMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `comment-message ${type}`;
+            messageDiv.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
+            
+            const form = document.querySelector('.comment-form');
+            form.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 4000);
+        }
+
+        document.addEventListener('DOMContentLoaded', loadPost);
+    </script>
+</body>
+</html>

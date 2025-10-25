@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Ela's Blog</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="cursor"></div>
+    
+    <header>
+        <div class="logo">
+            <a href="main.html" style="text-decoration: none; color: inherit;">
+                <span>E</span>la's Blog
+            </a>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="main.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="posts.html">Posts</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="notifications.html">🔔</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="gallery-page">
+        <section class="gallery-hero">
+            <div class="container">
+                <h1>My <span class="highlight">Photo Albums</span></h1>
+                <p class="gallery-intro">
+                    Welcome to my photo albums — beautiful collections of moments that tell my story. 
+                    Each album captures a different chapter of my journey, organized with love and care. 
+                    Click on any album to explore the memories within! 📸✨
+                </p>
+            </div>
+        </section>
+
+        <section class="gallery-grid">
+            <div class="container">
+                <div class="gallery-items" id="galleryItems">
+                    <!-- Gallery items will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Image Modal -->
+        <div id="imageModal" class="image-modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeImageModal()">&times;</span>
+                <img id="modalImage" src="" alt="">
+                <div class="image-info">
+                    <h3 id="imageTitle"></h3>
+                    <p id="imageDescription"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>&copy; 2025 Ela's Blog. Made with <i class="fas fa-heart"></i></p>
+        </div>
+    </footer>
+
+    <script>
+        const galleryImages = [
+            {
+                src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop",
+                category: "Morning Routines",
+                title: "Morning Reflections",
+                description: "Capturing the peaceful moments of dawn"
+            },
+            {
+                src: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop",
+                category: "Morning Routines",
+                title: "Coffee Time",
+                description: "Starting the day with mindful moments"
+            },
+            {
+                src: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=400&fit=crop",
+                category: "Morning Routines",
+                title: "Sunrise Meditation",
+                description: "Finding peace in the early hours"
+            },
+            {
+                src: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&h=400&fit=crop",
+                category: "Creative Workspace",
+                title: "Artistic Setup",
+                description: "Where inspiration meets creation"
+            },
+            {
+                src: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=400&fit=crop",
+                category: "Creative Workspace",
+                title: "Design Corner",
+                description: "My favorite creative space"
+            },
+            {
+                src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop",
+                category: "Creative Workspace",
+                title: "Inspiration Board",
+                description: "Collecting ideas and dreams"
+            }
+        ];
+
+        function loadGallery() {
+            const container = document.getElementById('galleryItems');
+            container.innerHTML = galleryImages.map((image, index) => `
+                <div class="gallery-item" onclick="openImageModal(${index})">
+                    <img src="${image.src}" alt="${image.title}">
+                    <div class="gallery-overlay">
+                        <h3>${image.title}</h3>
+                        <p>${image.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openImageModal(index) {
+            const image = galleryImages[index];
+            document.getElementById('modalImage').src = image.src;
+            document.getElementById('imageTitle').textContent = image.title;
+            document.getElementById('imageDescription').textContent = image.description;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside image
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeImageModal();
+            }
+        });
+
+        // Load photo albums
+        function loadGallery() {
+            const savedImages = JSON.parse(localStorage.getItem('galleryImages') || '[]');
+            const images = savedImages.length > 0 ? savedImages : galleryImages;
+            
+            // Group images by category (albums)
+            const albums = {};
+            images.forEach(image => {
+                const category = image.category || 'My Memories';
+                if (!albums[category]) {
+                    albums[category] = [];
+                }
+                albums[category].push(image);
+            });
+            
+            const container = document.getElementById('galleryItems');
+            let html = '';
+            
+            Object.keys(albums).forEach(albumName => {
+                const albumPhotos = albums[albumName];
+                const coverPhoto = albumPhotos[0]; // First photo as cover
+                const photoCount = albumPhotos.length;
+                
+                html += `
+                    <div class="photo-album" onclick="openAlbum('${albumName}')">
+                        <div class="album-cover">
+                            <img src="${coverPhoto.src}" alt="${albumName}">
+                            <div class="album-overlay">
+                                <div class="album-info">
+                                    <h3 class="album-title">📚 ${albumName}</h3>
+                                    <p class="photo-count">${photoCount} photo${photoCount > 1 ? 's' : ''}</p>
+                                    <div class="album-preview">
+                                        ${albumPhotos.slice(0, 3).map(photo => 
+                                            `<div class="preview-dot"></div>`
+                                        ).join('')}
+                                        ${photoCount > 3 ? '<div class="preview-more">+</div>' : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function openAlbum(albumName) {
+            const savedImages = JSON.parse(localStorage.getItem('galleryImages') || '[]');
+            const images = savedImages.length > 0 ? savedImages : galleryImages;
+            const albumPhotos = images.filter(img => img.category === albumName);
+            
+            const modal = document.createElement('div');
+            modal.className = 'album-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>📸 ${albumName}</h2>
+                        <span class="close-album" onclick="this.parentElement.parentElement.parentElement.remove()">&times;</span>
+                    </div>
+                    <div class="album-photos">
+                        ${albumPhotos.map((photo, index) => `
+                            <div class="album-photo" onclick="openImageModal(${images.indexOf(photo)})">
+                                <img src="${photo.src}" alt="${photo.title}">
+                                <div class="photo-info">
+                                    <h4>${photo.title}</h4>
+                                    <p>${photo.description}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        document.addEventListener('DOMContentLoaded', loadGallery);
+    </script>
+</body>
+</html>

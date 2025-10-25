@@ -1,0 +1,36 @@
+# Database connection file (contains sensitive info)
+db_connect.php
+
+# Test files
+test_*.php
+debug_*.php
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Backup files
+*.bak
+*.backup
+
+# Cache files
+cache/
+tmp/
